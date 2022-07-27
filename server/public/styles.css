@@ -26,6 +26,7 @@
   cursor: pointer;
 }
 
-.pane {
+.result-container {
   border: 1px solid;
+  height: 100vh;
 }
