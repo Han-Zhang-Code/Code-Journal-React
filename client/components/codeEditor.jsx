@@ -46,7 +46,7 @@ export default function CodeEditor(props) {
 
           <Editor
             language="javascript"
-            displayName="JS"
+            displayName="JavaScript"
             value={js}
             onChange={setJs}
           />
