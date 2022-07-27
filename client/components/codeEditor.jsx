@@ -23,6 +23,7 @@ export default function CodeEditor(props) {
 
   return (
     <>
+    <div className='code-editor-page'>
       <div className='title-bar'>
         <div className='app-title'>Code Journal</div>
         <div className='save-button'>SAVE</div>
@@ -51,7 +52,7 @@ export default function CodeEditor(props) {
           />
 
       </div>
-      <div className='result-window'>result</div>
+      <div className='result-window'>Result</div>
       <div className='result-container'>
       <div className="pane">
         <iframe
@@ -63,6 +64,7 @@ export default function CodeEditor(props) {
           height="100%"
         />
         </div></div>
+      </div>
     </>
   );
 }

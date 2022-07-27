@@ -40,7 +40,7 @@ export default function Editor(props) {
           lineWrapping: true,
           lint: true,
           mode: language,
-          theme: '',
+          theme: 'default',
           lineNumbers: true
         }}
 
