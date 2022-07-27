@@ -6,9 +6,6 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
-
 export default function Editor(props) {
   const {
     language,
@@ -31,7 +28,7 @@ export default function Editor(props) {
           className="expand-collapse-btn"
           onClick={() => setOpen(prevOpen => !prevOpen)}
         >
-          {/* <FontAwesomeIcon icon={open ? faCompressAlt : faExpandAlt} /> */}
+
         </button>
       </div>
       <ControlledEditor
