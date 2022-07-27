@@ -25,7 +25,7 @@ export default function Editor(props) {
         {displayName}
         <i
           type="button"
-          className="fa-solid fa-arrow-rotate-left adjust-collapsed"
+          className={`${open ? 'fas fa-compress-alt' : 'fas fa-expand-alt'} adjust-collapsed`}
           onClick={() => setOpen(prevOpen => !prevOpen)}
         >
         </i>
