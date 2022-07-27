@@ -4,7 +4,7 @@ import Editor from './Editor';
 export default function CodeEditor(props) {
   const [html, setHtml] = useState('');
   const [css, setCss] = useState('');
-  const [js, setJs] = useState('');
+  const [javascript, setJs] = useState('');
   const [srcDoc, setSrcDoc] = useState('');
 
   useEffect(() => {
@@ -13,22 +13,27 @@ export default function CodeEditor(props) {
         <html>
           <body>${html}</body>
           <style>${css}</style>
-          <script>${js}</script>
+          <script>${javascript}</script>
         </html>
       `);
     }, 250);
 
     return () => clearTimeout(timeout);
-  }, [html, css, js]);
+  }, [html, css, javascript]);
+
+  function addtoDatabase() {
+    const newObject = { html, css, javascript };
+    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
+  }
 
   return (
     <>
     <div className='code-editor-page'>
       <div className='title-bar'>
         <div className='app-title'>Code Journal</div>
-        <div className='save-button'>SAVE</div>
+        <div className='save-button' onClick={addtoDatabase}>SAVE</div>
       </div>
-      <div className="top-pane pane">
+      <div className="top-pane">
 
           <Editor
             language="xml"
@@ -47,14 +52,14 @@ export default function CodeEditor(props) {
           <Editor
             language="javascript"
             displayName="JavaScript"
-            value={js}
+            value={javascript}
             onChange={setJs}
           />
 
       </div>
       <div className='result-window'>Result</div>
-      <div className='result-container'>
-      <div className="pane">
+        <div className='result-container'>
+      <div className="pane ">
         <iframe
           srcDoc={srcDoc}
           title="output"

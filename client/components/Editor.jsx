@@ -23,13 +23,12 @@ export default function Editor(props) {
     <div className={`editor-container ${open ? '' : 'collapsed'}`}>
       <div className="editor-title">
         {displayName}
-        <button
+        <i
           type="button"
-          className="expand-collapse-btn"
+          className="fa-solid fa-arrow-rotate-left adjust-collapsed"
           onClick={() => setOpen(prevOpen => !prevOpen)}
         >
-
-        </button>
+        </i>
       </div>
 
       <ControlledEditor

@@ -33,11 +33,16 @@
   background-color: white;
 }
 
-.top-pane {
-  background-color: hsl(225deg, 6%, 25%);
-}
+/* .top-pane {
+  background-color: #e5e5e5;
+} */
 
 .pane {
+  height: 100vh;
+  display: flex;
+}
+
+.top-pane {
   height: 50vh;
   display: flex;
 }
@@ -51,7 +56,15 @@
   background-color: #e5e5e5;
 }
 
-.editor-container.collapsed {
+.adjust-collapsed {
+  margin-top: 3px;
+}
+
+.adjust-collapsed:hover {
+  cursor: pointer;
+}
+
+.collapsed {
   flex-grow: 0;
 }
 
@@ -63,7 +76,7 @@
 
 .expand-collapse-btn {
   margin-left: 0.5rem;
-  background: none;
+  background: white;
   border: none;
   color: white;
   cursor: pointer;
@@ -99,4 +112,17 @@
 
 .code-editor-page {
   background-color: #e5e5e5;
+}
+
+@media only screen and (max-width: 768px) {
+  .pane {
+    height: 100vh;
+    display: flex;
+  }
+
+  .top-pane {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+  }
 }
