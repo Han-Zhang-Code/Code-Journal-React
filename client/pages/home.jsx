@@ -1,10 +1,10 @@
 import React from 'react';
-import HelloWorld from '../components/hello-world';
+import CodeEditor from '../components/codeEditor';
 
 export default function Home(props) {
   return (
     <div>
-      <HelloWorld />
+      <CodeEditor />
     </div>
   );
 }

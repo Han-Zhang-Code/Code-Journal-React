@@ -1,0 +1,13 @@
+* {
+  font-family:
+    "Proza Libre",
+    sans-serif;
+}
+
+.title-bar {
+  background-color: #562b81;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
