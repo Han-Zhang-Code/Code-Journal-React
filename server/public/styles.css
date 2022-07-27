@@ -9,5 +9,19 @@
   color: white;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px;
+}
+
+.app-title {
+  padding-left: 1%;
+}
+
+.save-button {
+  padding-right: 1%;
+  font-size: 13px;
+}
+
+.save-button:hover {
+  cursor: pointer;
 }

@@ -47,6 +47,8 @@ export default function CodeEditor(props) {
           onChange={setJs}
         />
       </div>
+      <div className='result-window'>result</div>
+      <div className='result-container'>
       <div className="pane">
         <iframe
           srcDoc={srcDoc}
@@ -56,7 +58,7 @@ export default function CodeEditor(props) {
           width="100%"
           height="100%"
         />
-      </div>
+        </div></div>
     </>
   );
 }

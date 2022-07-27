@@ -31,6 +31,7 @@ export default function Editor(props) {
 
         </button>
       </div>
+
       <ControlledEditor
         onBeforeChange={handleChange}
         value={value}
@@ -42,7 +43,9 @@ export default function Editor(props) {
           theme: 'material',
           lineNumbers: true
         }}
+
       />
+
     </div>
   );
 }
