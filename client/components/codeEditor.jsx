@@ -27,25 +27,29 @@ export default function CodeEditor(props) {
         <div className='app-title'>Code Journal</div>
         <div className='save-button'>SAVE</div>
       </div>
-      <div className="pane top-pane">
-        <Editor
-          language="xml"
-          displayName="HTML"
-          value={html}
-          onChange={setHtml}
-        />
-        <Editor
-          language="css"
-          displayName="CSS"
-          value={css}
-          onChange={setCss}
-        />
-        <Editor
-          language="javascript"
-          displayName="JS"
-          value={js}
-          onChange={setJs}
-        />
+      <div className="top-pane pane">
+
+          <Editor
+            language="xml"
+            displayName="HTML"
+            value={html}
+            onChange={setHtml}
+            />
+
+          <Editor
+            language="css"
+            displayName="CSS"
+            value={css}
+            onChange={setCss}
+          />
+
+          <Editor
+            language="javascript"
+            displayName="JS"
+            value={js}
+            onChange={setJs}
+          />
+
       </div>
       <div className='result-window'>result</div>
       <div className='result-container'>
