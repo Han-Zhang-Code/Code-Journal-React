@@ -25,3 +25,7 @@
 .save-button:hover {
   cursor: pointer;
 }
+
+.pane {
+  border: 1px solid;
+}
