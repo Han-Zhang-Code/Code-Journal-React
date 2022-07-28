@@ -6,6 +6,7 @@ export default function CodeEditor(props) {
   const [css, setCss] = useState('');
   const [javascript, setJs] = useState('');
   const [srcDoc, setSrcDoc] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -21,19 +22,61 @@ export default function CodeEditor(props) {
     return () => clearTimeout(timeout);
   }, [html, css, javascript]);
 
-  function addtoDatabase() {
-    const newObject = { html, css, javascript };
-    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
-  }
+  // function addtoDatabase() {
+  //   const newObject = { html, css, javascript };
+  //   fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
+
+  // }
 
   return (
     <>
+      <div>
+        <div className={`${modalOpen ? 'modal' : 'modal-hide'}`}>
+          <div className="modal-content">
+            <div className='title-bar'>
+              <div className='save-title'>Code Journal</div>
+            </div>
+            <h3 className="adjust-save-title">New Entry</h3>
+            <div className="row">
+              <div className="column-half">
+                <img src="image/placeholder-image-square.jpeg" alt="placeholder-image-square" className="adjust-img column-full"/>
+              </div>
+              <div className="column-half">
+                <div>
+                  <label className="adjust-label">Title</label>
+                </div>
+                <div className='input-field'>
+                  <input required name="name" type="text" className="input-area column-full"/>
+                </div>
+                <div>
+                  <label className="adjust-label">Photo URL</label>
+                </div>
+                <div className='input-field'>
+                  <input required name="photo" type="text" className="input-area column-full" />
+                </div>
+              </div>
+            </div>
+            <div className="column-full ">
+              <div>
+                <label className="adjust-notes">Notes</label>
+              </div>
+              <div className='note-field'>
+                <textarea required rows="7" className="input-area column-full" ></textarea>
+              </div>
+              <div className="row adjust-button-position">
+                <a href="#" className="cancel-button" onClick={() => setModalOpen(prevOpen => false)}>Cancel</a>
+                <button type="submit" className="save-button">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <div className='code-editor-page'>
       <div className='title-bar'>
         <div className='app-title'>Code Journal</div>
-        <div className='save-button' onClick={addtoDatabase}>SAVE</div>
+          <div className='save-button' onClick={() => setModalOpen(prevOpen => true)}>SAVE</div>
       </div>
-      <div className="top-pane">
+      <div className={`top-pane ${modalOpen ? 'hidden' : ''}`}>
 
           <Editor
             language="xml"
