@@ -10,7 +10,6 @@ export default function CodeEditor(props) {
   const [title, setTitle] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [description, setDescription] = useState('');
-  const [urlOnChange, setUrlOnChange] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -29,14 +28,14 @@ export default function CodeEditor(props) {
   function addtoDatabase() {
     const newObject = { html, css, javascript, title, imageUrl, description };
     fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
-    setUrlOnChange(pre => false);
+
   }
   function handleTitle(event) {
     setTitle(event.target.value);
   }
   function handleImage(event) {
     setImageUrl(event.target.value);
-    setUrlOnChange(pre => true);
+
   }
   function handleDescription(event) {
     setDescription(event.target.value);
@@ -54,7 +53,7 @@ export default function CodeEditor(props) {
             <h3 className="adjust-save-title">New Entry</h3>
             <div className="row">
               <div className="column-half">
-                  <img src={`${urlOnChange ? imageUrl : 'image/placeholder-image-square.jpeg'}`} alt="placeholder-image-square" className="adjust-img column-full"/>
+                  <img src={imageUrl === '' ? 'image/placeholder-image-square.jpeg' : imageUrl} alt="placeholder-image-square" className="adjust-img column-full"/>
               </div>
               <div className="column-half">
                 <div>
@@ -79,7 +78,7 @@ export default function CodeEditor(props) {
                   <textarea required rows="7" className="input-area column-full" value={description} onChange={handleDescription}></textarea>
               </div>
               <div className="row adjust-button-position">
-                <a href="#" className="cancel-button" onClick={() => setModalOpen(prevOpen => false)}>Cancel</a>
+                <a href="#" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
                   <button type="submit" className="save-button" onClick={addtoDatabase}>Save</button>
               </div>
             </div>
