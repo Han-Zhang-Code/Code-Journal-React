@@ -7,6 +7,10 @@ export default function CodeEditor(props) {
   const [javascript, setJs] = useState('');
   const [srcDoc, setSrcDoc] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [description, setDescription] = useState('');
+  const [urlOnChange, setUrlOnChange] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -22,15 +26,26 @@ export default function CodeEditor(props) {
     return () => clearTimeout(timeout);
   }, [html, css, javascript]);
 
-  // function addtoDatabase() {
-  //   const newObject = { html, css, javascript };
-  //   fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
-
-  // }
+  function addtoDatabase() {
+    const newObject = { html, css, javascript, title, imageUrl, description };
+    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
+    setUrlOnChange(pre => false);
+  }
+  function handleTitle(event) {
+    setTitle(event.target.value);
+  }
+  function handleImage(event) {
+    setImageUrl(event.target.value);
+    setUrlOnChange(pre => true);
+  }
+  function handleDescription(event) {
+    setDescription(event.target.value);
+  }
 
   return (
     <>
       <div>
+      <form>
         <div className={`${modalOpen ? 'modal' : 'modal-hide'}`}>
           <div className="modal-content">
             <div className='title-bar'>
@@ -39,37 +54,38 @@ export default function CodeEditor(props) {
             <h3 className="adjust-save-title">New Entry</h3>
             <div className="row">
               <div className="column-half">
-                <img src="image/placeholder-image-square.jpeg" alt="placeholder-image-square" className="adjust-img column-full"/>
+                  <img src={`${urlOnChange ? imageUrl : 'image/placeholder-image-square.jpeg'}`} alt="placeholder-image-square" className="adjust-img column-full"/>
               </div>
               <div className="column-half">
                 <div>
                   <label className="adjust-label">Title</label>
                 </div>
                 <div className='input-field'>
-                  <input required name="name" type="text" className="input-area column-full"/>
+                  <input required name="name" type="text" className="input-area column-full" value={title} onChange={handleTitle}/>
                 </div>
                 <div>
                   <label className="adjust-label">Photo URL</label>
                 </div>
                 <div className='input-field'>
-                  <input required name="photo" type="text" className="input-area column-full" />
+                    <input required name="photo" type="text" className="input-area column-full" value={imageUrl} onChange={handleImage}/>
                 </div>
               </div>
             </div>
             <div className="column-full ">
               <div>
-                <label className="adjust-notes">Notes</label>
+                <label className="adjust-notes">Description</label>
               </div>
               <div className='note-field'>
-                <textarea required rows="7" className="input-area column-full" ></textarea>
+                  <textarea required rows="7" className="input-area column-full" value={description} onChange={handleDescription}></textarea>
               </div>
               <div className="row adjust-button-position">
                 <a href="#" className="cancel-button" onClick={() => setModalOpen(prevOpen => false)}>Cancel</a>
-                <button type="submit" className="save-button">Save</button>
+                  <button type="submit" className="save-button" onClick={addtoDatabase}>Save</button>
               </div>
             </div>
           </div>
         </div>
+        </form>
       </div>
     <div className='code-editor-page'>
       <div className='title-bar'>
