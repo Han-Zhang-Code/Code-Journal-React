@@ -42,7 +42,7 @@
   font-weight: normal;
   font-size: 15px;
   display: block;
-  margin-left: 2%;
+  margin-left: 35px;
   padding-top: 10px;
   padding-bottom: 8px;
   font-family:
@@ -51,8 +51,8 @@
 }
 
 .note-field {
-  margin-right: 20px;
-  margin-left: 20px;
+  margin-right: 35px;
+  margin-left: 35px;
 }
 
 .input-field {
@@ -118,7 +118,7 @@
 }
 
 .save-title {
-  padding-left: 5%;
+  padding-left: 30px;
 }
 
 .save-button:hover {
@@ -313,6 +313,11 @@
     color: red;
   }
 
+  .note-field {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
   .save-button {
     background-color: #552b81;
     color: white;
@@ -324,5 +329,18 @@
     font-family:
       "Proza Libre",
       sans-serif;
+  }
+
+  .adjust-save-title {
+    font-size: 25px;
+    font-weight: bold;
+    padding-left: 20px;
+    font-family:
+      "Proza Libre",
+      sans-serif;
+  }
+
+  .save-title {
+    padding-left: 10px;
   }
 }
