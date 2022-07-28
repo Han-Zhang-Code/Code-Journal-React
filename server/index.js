@@ -28,10 +28,10 @@ app.post('/api/code', (req, res, next) => {
 
   const sql = `
     insert into "code-journal"("html","css","javascript","title","imageUrl","description")
-    values ($1,$2,$3,'','','')
+    values ($1,$2,$3,$4,$5,$6)
     returning *
   `;
-  const codeArray = [req.body.html, req.body.css, req.body.javascript];
+  const codeArray = [req.body.html, req.body.css, req.body.javascript, req.body.title, req.body.imageUrl, req.body.description];
   db.query(sql, codeArray).then(result => {
     res.status(200).json(result.rows[0]);
   }).catch(err => next(err));
