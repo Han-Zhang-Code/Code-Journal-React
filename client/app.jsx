@@ -19,13 +19,13 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === 'hi') {
-      return <Home />;
-    }
-    if (route.path === 'entries') {
+    if (route.path === '') {
       return <ViewEntries />;
     }
-    return <Home />;
+    if (route.path === 'code-editor') {
+      return <Home />;
+    }
+    return <ViewEntries />;
   }
 
   render() {

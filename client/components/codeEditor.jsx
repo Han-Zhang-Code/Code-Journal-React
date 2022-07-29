@@ -36,7 +36,7 @@ export default function CodeEditor(props) {
   function handleSubmit() {
     const newObject = { html, css, javascript, title, imageUrl, description };
     fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
-    window.location.hash = '#entries';
+    window.location.hash = '#';
   }
   return (
     <>
@@ -75,7 +75,7 @@ export default function CodeEditor(props) {
                   <textarea required rows="7" className="input-area column-full" value={description} onChange={handleDescription}></textarea>
               </div>
               <div className="row adjust-button-position">
-                <a href="#" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                  <a href="#code-editor" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
                   <button type="submit" className="save-button" >Save</button>
               </div>
             </div>

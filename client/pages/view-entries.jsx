@@ -22,12 +22,12 @@ export default class ViewEntries extends React.Component {
 
         <div className='entries-title-bar'>
           <div className='app-title'>Code Journal</div>
-          <a href="#entries" className='view-entries-button'>Entries</a>
+          <a href="#" className='view-entries-button'>Entries</a>
         </div>
         <div className='container'>
           <div className='view-entries-title'>
             <h3 className="adjust-save-title">Entries</h3>
-            <a href='#' className='save-button'>NEW</a>
+            <a href='#code-editor' className='save-button'>NEW</a>
           </div>
           <div>
             {this.state.entries[0] === undefined &&
