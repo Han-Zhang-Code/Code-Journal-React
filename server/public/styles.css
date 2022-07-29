@@ -324,6 +324,15 @@
     flex-direction: column;
   }
 
+  .view-entries-image {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .caption {
+    padding: 10px;
+  }
+
   .column-half {
     width: 100%;
   }

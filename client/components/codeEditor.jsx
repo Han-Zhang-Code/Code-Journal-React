@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Editor from './Editor';
-
 export default function CodeEditor(props) {
   const [html, setHtml] = useState('');
   const [css, setCss] = useState('');
@@ -25,10 +24,6 @@ export default function CodeEditor(props) {
     return () => clearTimeout(timeout);
   }, [html, css, javascript]);
 
-  function addtoDatabase() {
-    const newObject = { html, css, javascript, title, imageUrl, description };
-    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
-  }
   function handleTitle(event) {
     setTitle(event.target.value);
   }
@@ -38,11 +33,15 @@ export default function CodeEditor(props) {
   function handleDescription(event) {
     setDescription(event.target.value);
   }
-
+  function handleSubmit() {
+    const newObject = { html, css, javascript, title, imageUrl, description };
+    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
+    window.location.hash = '#entries';
+  }
   return (
     <>
       <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className={`${modalOpen ? 'modal' : 'modal-hide'}`}>
           <div className="modal-content">
             <div className='title-bar'>
@@ -77,7 +76,7 @@ export default function CodeEditor(props) {
               </div>
               <div className="row adjust-button-position">
                 <a href="#" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
-                  <button type="submit" className="save-button" onClick={addtoDatabase}>Save</button>
+                  <button type="submit" className="save-button" >Save</button>
               </div>
             </div>
           </div>

@@ -63,7 +63,7 @@ function Entries(props) {
     </div>
     <div className='column-half'>
       <div className='caption'>
-        <h2 className='view-entries-title'>{title}</h2>
+        <h2 className='view-entries-content-title'>{title}</h2>
         <p className='view-entries-content'>{description}</p>
       </div>
     </div>
