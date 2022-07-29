@@ -21,6 +21,11 @@
   width: 50%;
 }
 
+.view-entries-container {
+  background-color: #e5e5e5;
+  height: 1000vh;
+}
+
 .adjust-label {
   font-weight: normal;
   font-size: 15px;
@@ -74,6 +79,35 @@
     sans-serif;
 }
 
+.entries-title-bar {
+  background-color: #562b81;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-family:
+    "Proza Libre",
+    sans-serif;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.view-entries-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.view-entries-button {
+  color: white;
+  padding-left: 20px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
 .app-title {
   padding-left: 1%;
 }
@@ -91,6 +125,15 @@
   border-radius: 5px;
   padding: 5px 10px;
   margin-right: 2%;
+  font-family:
+    "Proza Libre",
+    sans-serif;
+  text-decoration: none;
+}
+
+.no-entries-container {
+  text-align: center;
+  padding-top: 20px;
   font-family:
     "Proza Libre",
     sans-serif;
@@ -255,6 +298,18 @@
 
 .close-button:hover {
   cursor: pointer;
+}
+
+.view-entries-image {
+  width: 100%;
+  padding: 30px;
+}
+
+.caption {
+  padding: 30px;
+  font-family:
+    "Proza Libre",
+    sans-serif;
 }
 
 @media only screen and (max-width: 768px) {

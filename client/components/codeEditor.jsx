@@ -28,14 +28,12 @@ export default function CodeEditor(props) {
   function addtoDatabase() {
     const newObject = { html, css, javascript, title, imageUrl, description };
     fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
-
   }
   function handleTitle(event) {
     setTitle(event.target.value);
   }
   function handleImage(event) {
     setImageUrl(event.target.value);
-
   }
   function handleDescription(event) {
     setDescription(event.target.value);
@@ -89,6 +87,7 @@ export default function CodeEditor(props) {
     <div className='code-editor-page'>
       <div className='title-bar'>
         <div className='app-title'>Code Journal</div>
+          <a href="#entries" className='view-entries-button'>Entries</a>
           <div className='save-button' onClick={() => setModalOpen(prevOpen => true)}>SAVE</div>
       </div>
       <div className={`top-pane ${modalOpen ? 'hidden' : ''}`}>
