@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Editor from './Editor';
-
 export default function CodeEditor(props) {
   const [html, setHtml] = useState('');
   const [css, setCss] = useState('');
@@ -25,26 +24,27 @@ export default function CodeEditor(props) {
     return () => clearTimeout(timeout);
   }, [html, css, javascript]);
 
-  function addtoDatabase() {
-    const newObject = { html, css, javascript, title, imageUrl, description };
-    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
-
-  }
   function handleTitle(event) {
     setTitle(event.target.value);
   }
   function handleImage(event) {
     setImageUrl(event.target.value);
-
   }
   function handleDescription(event) {
     setDescription(event.target.value);
   }
+  function handleSubmit() {
+    const newObject = { html, css, javascript, title, imageUrl, description };
+    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
+      .then(() => {
+        window.location.hash = '#';
+      });
 
+  }
   return (
     <>
       <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className={`${modalOpen ? 'modal' : 'modal-hide'}`}>
           <div className="modal-content">
             <div className='title-bar'>
@@ -78,8 +78,8 @@ export default function CodeEditor(props) {
                   <textarea required rows="7" className="input-area column-full" value={description} onChange={handleDescription}></textarea>
               </div>
               <div className="row adjust-button-position">
-                <a href="#" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
-                  <button type="submit" className="save-button" onClick={addtoDatabase}>Save</button>
+                  <a href="#code-editor" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                  <button type="submit" className="save-button" >Save</button>
               </div>
             </div>
           </div>
@@ -89,6 +89,7 @@ export default function CodeEditor(props) {
     <div className='code-editor-page'>
       <div className='title-bar'>
         <div className='app-title'>Code Journal</div>
+          <a href="#entries" className='view-entries-button'>Entries</a>
           <div className='save-button' onClick={() => setModalOpen(prevOpen => true)}>SAVE</div>
       </div>
       <div className={`top-pane ${modalOpen ? 'hidden' : ''}`}>
