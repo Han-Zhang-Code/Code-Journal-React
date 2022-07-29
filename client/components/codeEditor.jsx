@@ -35,8 +35,11 @@ export default function CodeEditor(props) {
   }
   function handleSubmit() {
     const newObject = { html, css, javascript, title, imageUrl, description };
-    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } });
-    window.location.hash = '#';
+    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
+      .then(() => {
+        window.location.hash = '#';
+      });
+
   }
   return (
     <>
