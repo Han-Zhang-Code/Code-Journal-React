@@ -2,6 +2,7 @@ import React from 'react';
 import Home from './pages/home';
 import ViewEntries from './pages/view-entries';
 import parseRoute from './lib/parse-route';
+import EntryDetail from './pages/view-entry-detail';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -24,6 +25,10 @@ export default class App extends React.Component {
     }
     if (route.path === 'code-editor') {
       return <Home />;
+    }
+    if (route.path === 'code') {
+      const entryId = route.params.get('entryId');
+      return <EntryDetail entryId={entryId}/>;
     }
     return <ViewEntries />;
   }

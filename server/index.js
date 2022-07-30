@@ -1,6 +1,7 @@
 require('dotenv/config');
 const pg = require('pg');
 const path = require('path');
+const ClientError = require('./client-error');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const db = new pg.Pool({ // eslint-disable-line
@@ -43,6 +44,26 @@ app.get('/api/code', (req, res, next) => {
   db.query(sql).then(result => {
     res.status(200).json(result.rows);
   }).catch(err => next(err));
+});
+
+app.get('/api/code/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'productId must be a positive integer');
+  }
+  const sql = `
+    select * from "code-journal"
+     where "entryId" = $1
+  `;
+  const params = [entryId];
+  db.query(sql, params)
+    .then(result => {
+      if (!result.rows[0]) {
+        throw new ClientError(404, `cannot find product with productId ${entryId}`);
+      }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
