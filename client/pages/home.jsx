@@ -4,7 +4,7 @@ import CodeEditor from '../components/codeEditor';
 export default function Home(props) {
   return (
     <div>
-      <CodeEditor />
+      <CodeEditor html='' css='' js=''/>
     </div>
   );
 }

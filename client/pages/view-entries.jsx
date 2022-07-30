@@ -54,19 +54,23 @@ export default class ViewEntries extends React.Component {
 
 }
 function Entries(props) {
-  const { title, imageUrl, description } = props.entries;
+  const { entryId, title, imageUrl, description } = props.entries;
 
   return (
+
   <div className='row'>
     <div className='column-half'>
       <img src={imageUrl} alt={imageUrl} className='view-entries-image'/>
     </div>
     <div className='column-half'>
       <div className='caption'>
+          <a href={`#code?entryId=${entryId}`} className='entries-anchor'>
         <h2 className='view-entries-content-title'>{title}</h2>
+          </a>
         <p className='view-entries-content'>{description}</p>
       </div>
     </div>
   </div>
+
   );
 }

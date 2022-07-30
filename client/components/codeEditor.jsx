@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Editor from './Editor';
 export default function CodeEditor(props) {
-  const [html, setHtml] = useState('');
-  const [css, setCss] = useState('');
-  const [javascript, setJs] = useState('');
+  const [html, setHtml] = useState(props.html);
+  const [css, setCss] = useState(props.css);
+  const [javascript, setJs] = useState(props.js);
   const [srcDoc, setSrcDoc] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [title, setTitle] = useState('');
@@ -24,6 +24,12 @@ export default function CodeEditor(props) {
     return () => clearTimeout(timeout);
   }, [html, css, javascript]);
 
+  useEffect(() => {
+    setHtml(props.html);
+    setCss(props.css);
+    setJs(props.js);
+  }, [props.html, props.css, props.js]);
+
   function handleTitle(event) {
     setTitle(event.target.value);
   }
@@ -39,6 +45,7 @@ export default function CodeEditor(props) {
       .then(() => {
         window.location.hash = '#';
       });
+    window.location.hash = '#';
 
   }
   return (
@@ -78,7 +85,7 @@ export default function CodeEditor(props) {
                   <textarea required rows="7" className="input-area column-full" value={description} onChange={handleDescription}></textarea>
               </div>
               <div className="row adjust-button-position">
-                  <a href="#code-editor" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                  <a href='#code-editor' className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
                   <button type="submit" className="save-button" >Save</button>
               </div>
             </div>
