@@ -6,10 +6,11 @@ export default function CodeEditor(props) {
   const [javascript, setJs] = useState(props.js);
   const [srcDoc, setSrcDoc] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState(props.title);
+  const [imageUrl, setImageUrl] = useState(props.imageUrl);
+  const [description, setDescription] = useState(props.description);
   const [entryId, setEntryId] = useState(props.entryId);
+  const [dataView, setDataView] = useState(props.dataView);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -29,8 +30,12 @@ export default function CodeEditor(props) {
     setHtml(props.html);
     setCss(props.css);
     setJs(props.js);
+    setTitle(props.title);
+    setImageUrl(props.imageUrl);
+    setDescription(props.description);
     setEntryId(props.entryId);
-  }, [props.html, props.css, props.js, props.entryId]);
+    setDataView(props.dataView);
+  }, [props.html, props.css, props.js, props.title, props.imageUrl, props.description, props.entryId, props.dataView]);
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -41,13 +46,21 @@ export default function CodeEditor(props) {
   function handleDescription(event) {
     setDescription(event.target.value);
   }
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault();
     const newObject = { html, css, javascript, title, imageUrl, description };
-    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
-      .then(() => {
-        window.location.hash = '#';
-      });
-    window.location.hash = '#';
+    if (dataView === 'createEntry') {
+      fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
+        .then(() => {
+          window.location.hash = '#';
+        });
+    }
+    if (dataView === 'edit-entry') {
+      fetch(`/api/code/${entryId}`, { method: 'PATCH', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
+        .then(() => {
+          window.location.hash = '#';
+        });
+    }
 
   }
   return (
@@ -88,7 +101,12 @@ export default function CodeEditor(props) {
               </div>
 
               <div className="row adjust-button-position">
-                  <a href={(props.html === '' && props.css === '' && props.js === '') ? '#code-editor' : `#code?entryId=${entryId}`} className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                  { dataView === 'createEntry' &&
+                  <a href="#code-editor" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                  }
+                  {dataView === 'edit-entry' &&
+                    <a href={`#edit-code?entryId=${entryId}`} className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                  }
                   <button type="submit" className="save-button" >Save</button>
               </div>
 
@@ -98,11 +116,19 @@ export default function CodeEditor(props) {
         </form>
       </div>
     <div className='code-editor-page'>
+        {(dataView === 'createEntry' || dataView === 'edit-entry') &&
       <div className='title-bar'>
-        <div className='app-title'>Code Journal</div>
+          <div className='app-title'> <a href="#entries" className='title-link'>Code Journal</a></div>
           <a href="#entries" className='view-entries-button'>Entries</a>
           <div className='save-button' onClick={() => setModalOpen(prevOpen => true)}>SAVE</div>
       </div>
+        }
+        {
+          dataView === 'view-detail' &&
+          <div className='title-bar'>
+            <div className='app-title'> <a href="#entries" className='title-link'>Code Journal</a></div>
+          </div>
+        }
       <div className={`top-pane ${modalOpen ? 'hidden' : ''}`}>
 
           <Editor

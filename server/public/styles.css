@@ -26,6 +26,22 @@
   height: 1000vh;
 }
 
+.view-entries-title-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.adjust-editing-button {
+  padding-right: 10px;
+  font-size: 30px;
+  color: #552b81;
+}
+
+.adjust-editing-button:hover {
+  cursor: pointer;
+}
+
 .adjust-label {
   font-weight: normal;
   font-size: 15px;
@@ -319,6 +335,11 @@
   font-family:
     "Proza Libre",
     sans-serif;
+}
+
+.title-link {
+  color: white;
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 768px) {
