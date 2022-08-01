@@ -102,7 +102,12 @@ export default function CodeEditor(props) {
               </div>
 
               <div className="row adjust-button-position">
+                  { dataView === 'createEntry' &&
                   <a href="#code-editor" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                  }
+                  {dataView === 'edit-entry' &&
+                    <a href={`#edit-code?entryId=${entryId}`} className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                  }
                   <button type="submit" className="save-button" >Save</button>
               </div>
 
