@@ -18,7 +18,7 @@ export default class EntryDetail extends React.Component {
   render() {
     const { html, css, javascript, entryId } = this.state.entries;
     return (
-      <CodeEditor html={html} css={css} js={javascript} entryId={entryId}/>
+      <CodeEditor html={html} css={css} js={javascript} entryId={entryId} dataView='view-detail'/>
     );
   }
 
