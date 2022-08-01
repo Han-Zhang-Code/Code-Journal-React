@@ -16,9 +16,9 @@ export default class EditEntry extends React.Component {
   }
 
   render() {
-    const { html, css, javascript, entryId } = this.state.entries;
+    const { html, css, javascript, entryId, title, imageUrl, description } = this.state.entries;
     return (
-      <CodeEditor html={html} css={css} js={javascript} entryId={entryId} dataView='edit-entry' />
+      <CodeEditor html={html} css={css} js={javascript} entryId={entryId} dataView='edit-entry' title={title} imageUrl={imageUrl} description={description}/>
     );
   }
 

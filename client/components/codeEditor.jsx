@@ -6,9 +6,9 @@ export default function CodeEditor(props) {
   const [javascript, setJs] = useState(props.js);
   const [srcDoc, setSrcDoc] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState(props.title);
+  const [imageUrl, setImageUrl] = useState(props.imageUrl);
+  const [description, setDescription] = useState(props.description);
   const [entryId, setEntryId] = useState(props.entryId);
   const [dataView, setDataView] = useState(props.dataView);
 
@@ -30,9 +30,12 @@ export default function CodeEditor(props) {
     setHtml(props.html);
     setCss(props.css);
     setJs(props.js);
+    setTitle(props.title);
+    setImageUrl(props.imageUrl);
+    setDescription(props.description);
     setEntryId(props.entryId);
     setDataView(props.dataView);
-  }, [props.html, props.css, props.js, props.entryId, props.dataView]);
+  }, [props.html, props.css, props.js, props.title, props.imageUrl, props.description, props.entryId, props.dataView]);
 
   function handleTitle(event) {
     setTitle(event.target.value);
