@@ -5,7 +5,7 @@ export default class EditEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      entries: []
+      entries: { html: '', css: '', javascript: '', title: '', imageUrl: '', description: '' }
     };
   }
 
