@@ -46,21 +46,20 @@ export default function CodeEditor(props) {
   function handleDescription(event) {
     setDescription(event.target.value);
   }
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault();
     const newObject = { html, css, javascript, title, imageUrl, description };
     if (dataView === 'createEntry') {
       fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
         .then(() => {
           window.location.hash = '#';
         });
-      window.location.hash = '#';
     }
     if (dataView === 'edit-entry') {
       fetch(`/api/code/${entryId}`, { method: 'PATCH', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
         .then(() => {
           window.location.hash = '#';
         });
-      window.location.hash = '#';
     }
 
   }
