@@ -40,7 +40,7 @@ app.post('/api/code', (req, res, next) => {
 app.patch('/api/code/:entryId', (req, res, next) => {
   const entryId = Number(req.params.entryId);
   if (!entryId) {
-    throw new ClientError(400, 'productId must be a positive integer');
+    throw new ClientError(400, 'entryId must be a positive integer');
   }
   const sql = `
   update "code-journal" set "html"=$1,"css"=$2,"javascript"=$3,"title"=$4,"imageUrl"=$5,"description"=$6 where "entryId"=$7 returning *
@@ -68,7 +68,7 @@ app.get('/api/code', (req, res, next) => {
 app.get('/api/code/:entryId', (req, res, next) => {
   const entryId = Number(req.params.entryId);
   if (!entryId) {
-    throw new ClientError(400, 'productId must be a positive integer');
+    throw new ClientError(400, 'entryId must be a positive integer');
   }
   const sql = `
     select * from "code-journal"
@@ -80,6 +80,23 @@ app.get('/api/code/:entryId', (req, res, next) => {
       if (!result.rows[0]) {
         throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
       }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.delete('/api/code/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'entryId must be a positive integer');
+  }
+  const sql = `
+    delete from "code-journal"
+     where "entryId" = $1
+  `;
+  const params = [entryId];
+  db.query(sql, params)
+    .then(result => {
       res.json(result.rows[0]);
     })
     .catch(err => next(err));

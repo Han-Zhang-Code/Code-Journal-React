@@ -6,6 +6,7 @@ export default function CodeEditor(props) {
   const [javascript, setJs] = useState(props.js);
   const [srcDoc, setSrcDoc] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [title, setTitle] = useState(props.title);
   const [imageUrl, setImageUrl] = useState(props.imageUrl);
   const [description, setDescription] = useState(props.description);
@@ -46,6 +47,7 @@ export default function CodeEditor(props) {
   function handleDescription(event) {
     setDescription(event.target.value);
   }
+  // function handleDelete() {}
   function handleSubmit(event) {
     event.preventDefault();
     const newObject = { html, css, javascript, title, imageUrl, description };
@@ -67,8 +69,12 @@ export default function CodeEditor(props) {
     <>
       <div>
       <form onSubmit={handleSubmit}>
+
         <div className={`${modalOpen ? 'modal' : 'modal-hide'}`}>
-          <div className="modal-content">
+            <div className={`delete-modal ${deleteModalOpen ? '' : 'hidden'}`}>
+            <button onClick={e => { setDeleteModalOpen(false); e.preventDefault(); }}>cancel</button>
+          </div>
+            <div className={`modal-content ${deleteModalOpen ? 'hidden' : ''}`}>
             <div className='title-bar'>
               <div className='save-title'>Code Journal</div>
             </div>
@@ -105,12 +111,13 @@ export default function CodeEditor(props) {
                   <a href="#code-editor" className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
                   }
                   {dataView === 'edit-entry' &&
-                    <a href={`#edit-code?entryId=${entryId}`} className="cancel-button" onClick={() => { setModalOpen(prevOpen => false); setImageUrl(''); }}>Cancel</a>
+                    <a className="delete-button" onClick={() => { setDeleteModalOpen(true); }}>Delete Entry</a>
                   }
                   <button type="submit" className="save-button" >Save</button>
               </div>
 
             </div>
+
           </div>
         </div>
         </form>
