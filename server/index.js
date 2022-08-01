@@ -37,6 +37,25 @@ app.post('/api/code', (req, res, next) => {
   }).catch(err => next(err));
 });
 
+app.patch('/api/code/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'productId must be a positive integer');
+  }
+  const sql = `
+  update "code-journal" set "html"=$1,"css"=$2,"javascript"=$3,"title"=$4,"imageUrl"=$5,"description"=$6 where "entryId"=$7 returning *
+  `;
+  const codeArray = [req.body.html, req.body.css, req.body.javascript, req.body.title, req.body.imageUrl, req.body.description, entryId];
+  db.query(sql, codeArray)
+    .then(result => {
+      if (!result.rows[0]) {
+        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
+      }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/code', (req, res, next) => {
   const sql = `
     select * from "code-journal"
@@ -59,7 +78,7 @@ app.get('/api/code/:entryId', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       if (!result.rows[0]) {
-        throw new ClientError(404, `cannot find product with productId ${entryId}`);
+        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
       }
       res.json(result.rows[0]);
     })
