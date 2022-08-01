@@ -64,9 +64,10 @@ function Entries(props) {
     </div>
     <div className='column-half'>
       <div className='caption'>
-          <a href={`#code?entryId=${entryId}`} className='entries-anchor'>
-        <h2 className='view-entries-content-title'>{title}</h2>
-          </a>
+        <div className='view-entries-title-section'>
+          <a href={`#code?entryId=${entryId}`} className='entries-anchor'><h2 className='view-entries-content-title'>{title}</h2></a>
+          <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
+        </div>
         <p className='view-entries-content'>{description}</p>
       </div>
     </div>

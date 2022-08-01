@@ -3,6 +3,7 @@ import Home from './pages/home';
 import ViewEntries from './pages/view-entries';
 import parseRoute from './lib/parse-route';
 import EntryDetail from './pages/view-entry-detail';
+import EditEntry from './pages/edit-entry';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,6 +30,10 @@ export default class App extends React.Component {
     if (route.path === 'code') {
       const entryId = route.params.get('entryId');
       return <EntryDetail entryId={entryId}/>;
+    }
+    if (route.path === 'edit-code') {
+      const entryId = route.params.get('entryId');
+      return <EditEntry entryId={entryId} />;
     }
     return <ViewEntries />;
   }

@@ -9,7 +9,7 @@ export default function CodeEditor(props) {
   const [title, setTitle] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [description, setDescription] = useState('');
-  // const [entryId, setEntryId] = useState(props.entryId);
+  const [entryId, setEntryId] = useState(props.entryId);
   const [dataView, setDataView] = useState(props.dataView);
 
   useEffect(() => {
@@ -30,9 +30,9 @@ export default function CodeEditor(props) {
     setHtml(props.html);
     setCss(props.css);
     setJs(props.js);
-    // setEntryId(props.entryId);
+    setEntryId(props.entryId);
     setDataView(props.dataView);
-  }, [props.html, props.css, props.js, props.dataView]);
+  }, [props.html, props.css, props.js, props.entryId, props.dataView]);
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -45,11 +45,20 @@ export default function CodeEditor(props) {
   }
   function handleSubmit() {
     const newObject = { html, css, javascript, title, imageUrl, description };
-    fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
-      .then(() => {
-        window.location.hash = '#';
-      });
-    window.location.hash = '#';
+    if (dataView === 'createEntry') {
+      fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
+        .then(() => {
+          window.location.hash = '#';
+        });
+      window.location.hash = '#';
+    }
+    if (dataView === 'edit-entry') {
+      fetch(`/api/code/${entryId}`, { method: 'PATCH', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
+        .then(() => {
+          window.location.hash = '#';
+        });
+      window.location.hash = '#';
+    }
 
   }
   return (
@@ -100,7 +109,7 @@ export default function CodeEditor(props) {
         </form>
       </div>
     <div className='code-editor-page'>
-        {dataView === 'createEntry' &&
+        {(dataView === 'createEntry' || dataView === 'edit-entry') &&
       <div className='title-bar'>
           <div className='app-title'> <a href="#entries" className='title-link'>Code Journal</a></div>
           <a href="#entries" className='view-entries-button'>Entries</a>
