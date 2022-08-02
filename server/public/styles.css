@@ -303,6 +303,40 @@
   width: 500px;
   background-color: white;
   height: 200px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family:
+    "Proza Libre",
+    sans-serif;
+}
+
+.delete-message {
+  margin-bottom: 50px;
+}
+
+.cancel-button-delete {
+  margin-right: 50px;
+  border: none;
+  background-color: #b6b6b6;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.confirm-button-delete {
+  margin-left: 50px;
+  border: none;
+  background-color: #dc2626;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
 }
 
 .modal {
@@ -456,5 +490,24 @@
 
   .save-title {
     padding-left: 10px;
+  }
+
+  .delete-modal {
+    width: 300px;
+    background-color: white;
+    height: 150px;
+    text-align: center;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family:
+      "Proza Libre",
+      sans-serif;
+  }
+
+  .delete-message {
+    margin-bottom: 20px;
   }
 }

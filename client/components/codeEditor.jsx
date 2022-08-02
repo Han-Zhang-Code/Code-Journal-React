@@ -47,7 +47,13 @@ export default function CodeEditor(props) {
   function handleDescription(event) {
     setDescription(event.target.value);
   }
-  // function handleDelete() {}
+  function handleDelete(event) {
+    event.preventDefault();
+    fetch(`/api/code/${entryId}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+      .then(() => {
+        window.location.hash = '#';
+      });
+  }
   function handleSubmit(event) {
     event.preventDefault();
     const newObject = { html, css, javascript, title, imageUrl, description };
@@ -72,8 +78,12 @@ export default function CodeEditor(props) {
 
         <div className={`${modalOpen ? 'modal' : 'modal-hide'}`}>
             <div className={`delete-modal ${deleteModalOpen ? '' : 'hidden'}`}>
-            <button onClick={e => { setDeleteModalOpen(false); e.preventDefault(); }}>cancel</button>
-          </div>
+              <p className='delete-message'>Are you sure you want to delete this entry?</p>
+              <div>
+                <button className='cancel-button-delete' onClick={e => { setDeleteModalOpen(false); e.preventDefault(); }}>CANCEL</button>
+                <button className='confirm-button-delete' onClick={handleDelete}>CONFIRM</button>
+              </div>
+            </div>
             <div className={`modal-content ${deleteModalOpen ? 'hidden' : ''}`}>
             <div className='title-bar'>
               <div className='save-title'>Code Journal</div>
