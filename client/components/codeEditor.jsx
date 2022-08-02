@@ -176,7 +176,7 @@ export default function CodeEditor(props) {
         <iframe
           srcDoc={srcDoc}
           title="output"
-          sandbox="allow-scripts allow-forms"
+              sandbox="allow-scripts allow-forms allow-same-origin"
           frameBorder="0"
           width="100%"
           height="100%"
