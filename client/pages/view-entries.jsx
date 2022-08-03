@@ -5,7 +5,8 @@ export default class ViewEntries extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      entries: []
+      entries: [],
+      userinput: ''
     };
   }
 
@@ -41,6 +42,17 @@ export default class ViewEntries extends React.Component {
               <a href="#entries?sort=alphabet">Alphabet</a>
             </div>
           </div>
+          <form className='search-field' onSubmit={e => {
+            e.preventDefault();
+            window.location.hash = 'search';
+            fetch(`/api/search/${this.state.userinput}`)
+              .then(res => res.json())
+              .then(entries => this.setState({ entries }));
+
+          }}>
+            <input required type="text" className="search-area" value={this.state.userinput} onChange={e => { this.setState({ userinput: e.target.value }); }}/>
+            <button className='search-button' type='submit'>Search</button>
+          </form>
         </div>
         <div className='container'>
           <div className='view-entries-title'>
@@ -50,7 +62,7 @@ export default class ViewEntries extends React.Component {
           <div>
             {this.state.entries[0] === undefined &&
               <div className='no-entries-container' >
-                <div>No entries have been recorded.</div>
+                <div>No entries have been found.</div>
               </div>
             }
             {this.state.entries[0] !== undefined &&

@@ -84,12 +84,28 @@ app.get('/api/createTime', (req, res, next) => {
     res.status(200).json(result.rows);
   }).catch(err => next(err));
 });
+
 app.get('/api/size', (req, res, next) => {
   const sql = `
     select * from "code-journal"
     order by length("javascript")
   `;
   db.query(sql).then(result => {
+    res.status(200).json(result.rows);
+  }).catch(err => next(err));
+});
+
+app.get('/api/search/:title', (req, res, next) => {
+  const title = req.params.title;
+  const sql = `
+    select * from "code-journal"
+    where "title" like '%' || $1 || '%'
+  `;
+  const searchItem = [title];
+  db.query(sql, searchItem).then(result => {
+    if (!result.rows[0]) {
+      throw new ClientError(404, `cannot find entry with title ${searchItem}`);
+    }
     res.status(200).json(result.rows);
   }).catch(err => next(err));
 });
