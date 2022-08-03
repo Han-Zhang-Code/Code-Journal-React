@@ -42,7 +42,7 @@ export default class ViewEntries extends React.Component {
             </div>
           </div>
           <div className='search-field'>
-            <input name="name" type="text" className="search-area column-full" value='' />
+            <input name="name" type="text" className="search-area" value='' />
           </div>
         </div>
         <div className='container'>

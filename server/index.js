@@ -37,6 +37,20 @@ app.post('/api/code', (req, res, next) => {
   }).catch(err => next(err));
 });
 
+app.get('/api/search', (req, res, next) => {
+  const sql = `
+    select * from "code-journal"
+    where "title"=$1
+  `;
+  const searchItem = [req.body.title];
+  db.query(sql, searchItem).then(result => {
+    if (!result.rows[0]) {
+      throw new ClientError(404, `cannot find entry with title ${searchItem}`);
+    }
+    res.status(200).json(result.rows);
+  }).catch(err => next(err));
+});
+
 app.patch('/api/code/:entryId', (req, res, next) => {
   const entryId = Number(req.params.entryId);
   if (!entryId) {
@@ -84,6 +98,7 @@ app.get('/api/createTime', (req, res, next) => {
     res.status(200).json(result.rows);
   }).catch(err => next(err));
 });
+
 app.get('/api/size', (req, res, next) => {
   const sql = `
     select * from "code-journal"
