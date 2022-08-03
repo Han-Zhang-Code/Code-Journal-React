@@ -14,6 +14,7 @@ CREATE TABLE "public"."code-journal" (
 	"title" TEXT NOT NULL,
 	"imageUrl" TEXT NOT NULL,
 	"description" TEXT NOT NULL,
+  "createdAt"      timestamptz(6) not null default now(),
 	CONSTRAINT "code-journal_pk" PRIMARY KEY ("entryId")
 ) WITH (
   OIDS=FALSE
