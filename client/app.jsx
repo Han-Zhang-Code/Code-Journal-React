@@ -4,6 +4,7 @@ import ViewEntries from './pages/view-entries';
 import parseRoute from './lib/parse-route';
 import EntryDetail from './pages/view-entry-detail';
 import EditEntry from './pages/edit-entry';
+import Auth from './pages/Auth';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,6 +36,9 @@ export default class App extends React.Component {
     if (route.path === 'edit-code') {
       const entryId = route.params.get('entryId');
       return <EditEntry entryId={entryId} />;
+    }
+    if (route.path === 'sign-up') {
+      return <Auth />;
     }
     return <ViewEntries />;
   }
