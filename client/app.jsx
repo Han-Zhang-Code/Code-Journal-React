@@ -21,8 +21,9 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === '') {
-      return <ViewEntries />;
+    if (route.path === '' || route.path === 'entries') {
+      const sort = route.params.get('sort');
+      return <ViewEntries sort={sort}/>;
     }
     if (route.path === 'code-editor') {
       return <Home />;

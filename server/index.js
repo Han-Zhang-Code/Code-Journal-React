@@ -65,6 +65,35 @@ app.get('/api/code', (req, res, next) => {
   }).catch(err => next(err));
 });
 
+app.get('/api/alphabet', (req, res, next) => {
+  const sql = `
+    select * from "code-journal"
+    order by "title"
+  `;
+  db.query(sql).then(result => {
+    res.status(200).json(result.rows);
+  }).catch(err => next(err));
+});
+
+app.get('/api/createTime', (req, res, next) => {
+  const sql = `
+    select * from "code-journal"
+    order by "entryId"
+  `;
+  db.query(sql).then(result => {
+    res.status(200).json(result.rows);
+  }).catch(err => next(err));
+});
+app.get('/api/size', (req, res, next) => {
+  const sql = `
+    select * from "code-journal"
+    order by length("javascript")
+  `;
+  db.query(sql).then(result => {
+    res.status(200).json(result.rows);
+  }).catch(err => next(err));
+});
+
 app.get('/api/code/:entryId', (req, res, next) => {
   const entryId = Number(req.params.entryId);
   if (!entryId) {
