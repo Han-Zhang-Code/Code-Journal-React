@@ -15,6 +15,16 @@ export default class ViewEntries extends React.Component {
       .then(entries => this.setState({ entries }));
   }
 
+  componentDidUpdate(prevProps) {
+    const { sort } = this.props;
+    if (this.props.sort === prevProps.sort) {
+      fetch(`/api/${sort === null ? 'code' : sort}`)
+        .then(res => res.json())
+        .then(entries => this.setState({ entries }));
+    }
+
+  }
+
   render() {
 
     return (
@@ -26,9 +36,9 @@ export default class ViewEntries extends React.Component {
           <div className="dropdown">
             <button className="dropbtn">Sort by</button>
             <div className="dropdown-content">
-              <a href="#">Create Time</a>
-              <a href="#">Size</a>
-              <a href="#">Alphabet</a>
+              <a href="#entries?sort=createTime">Create Time</a>
+              <a href="#entries?sort=size">Size</a>
+              <a href="#entries?sort=alphabet">Alphabet</a>
             </div>
           </div>
         </div>
