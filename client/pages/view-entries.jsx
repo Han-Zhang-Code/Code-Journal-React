@@ -17,7 +17,7 @@ export default class ViewEntries extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { sort } = this.props;
-    if (this.props.sort === prevProps.sort) {
+    if (this.props.sort !== prevProps.sort) {
       fetch(`/api/${sort === null ? 'code' : sort}`)
         .then(res => res.json())
         .then(entries => this.setState({ entries }));
