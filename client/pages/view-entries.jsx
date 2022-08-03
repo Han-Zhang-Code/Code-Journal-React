@@ -41,6 +41,9 @@ export default class ViewEntries extends React.Component {
               <a href="#entries?sort=alphabet">Alphabet</a>
             </div>
           </div>
+          <div className='search-field'>
+            <input name="name" type="text" className="search-area column-full" value='' />
+          </div>
         </div>
         <div className='container'>
           <div className='view-entries-title'>

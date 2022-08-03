@@ -95,6 +95,19 @@
     sans-serif;
 }
 
+.search-area {
+  display: block;
+  padding: 5px;
+  border: 1px solid rgb(189 189 189);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+}
+
 .entries-title-bar {
   background-color: #562b81;
   color: white;
