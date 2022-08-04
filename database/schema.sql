@@ -5,7 +5,14 @@ set client_min_messages to warning;
 drop schema "public" cascade;
 
 create schema "public";
-
+create table "public"."users" (
+  "userId"         serial,
+  "username"       text           not null,
+  "hashedPassword" text           not null,
+  "createdAt"      timestamptz(6) not null default now(),
+  primary key ("userId"),
+  unique ("username")
+);
 CREATE TABLE "public"."code-journal" (
 	"entryId" serial NOT NULL,
 	"html" TEXT,
@@ -15,16 +22,10 @@ CREATE TABLE "public"."code-journal" (
 	"imageUrl" TEXT NOT NULL,
 	"description" TEXT NOT NULL,
   "createdAt"      timestamptz(6) not null default now(),
-	CONSTRAINT "code-journal_pk" PRIMARY KEY ("entryId")
+  "userId" INTEGER not null,
+	CONSTRAINT "code-journal_pk" PRIMARY KEY ("entryId"),
+    foreign key ("userId")
+   references "users" ("userId")
 ) WITH (
   OIDS=FALSE
-);
-
-create table "public"."users" (
-  "userId"         serial,
-  "username"       text           not null,
-  "hashedPassword" text           not null,
-  "createdAt"      timestamptz(6) not null default now(),
-  primary key ("userId"),
-  unique ("username")
 );
