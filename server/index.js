@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
+const authorizationMiddleware = require('./authorization-middleware');
 const db = new pg.Pool({ // eslint-disable-line
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -78,7 +79,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     })
     .catch(err => next(err));
 });
-
+app.use(authorizationMiddleware);
 app.get('/api/hello', (req, res) => {
   res.json({ hello: 'world' });
 });

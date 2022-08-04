@@ -10,7 +10,7 @@ export default class EntryDetail extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/code/${this.props.entryId}`)
+    fetch(`/api/code/${this.props.entryId}`, { headers: { 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
       .then(res => res.json())
       .then(entries => this.setState({ entries }));
   }

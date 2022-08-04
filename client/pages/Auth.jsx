@@ -26,6 +26,7 @@ export default function Auth(props) {
         .then(result => {
           if (result.token && result.user) {
             window.location.hash = '#entries';
+            window.localStorage.setItem('react-context-jwt', result.token);
           }
         });
     }

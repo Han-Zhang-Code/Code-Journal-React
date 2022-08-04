@@ -49,7 +49,7 @@ export default function CodeEditor(props) {
   }
   function handleDelete(event) {
     event.preventDefault();
-    fetch(`/api/code/${entryId}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+    fetch(`/api/code/${entryId}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
       .then(() => {
         window.location.hash = '#entries';
       });
@@ -58,13 +58,13 @@ export default function CodeEditor(props) {
     event.preventDefault();
     const newObject = { html, css, javascript, title, imageUrl, description };
     if (dataView === 'createEntry') {
-      fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
+      fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
         .then(() => {
           window.location.hash = '#entries';
         });
     }
     if (dataView === 'edit-entry') {
-      fetch(`/api/code/${entryId}`, { method: 'PATCH', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
+      fetch(`/api/code/${entryId}`, { method: 'PATCH', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
         .then(() => {
           window.location.hash = '#entries';
         });

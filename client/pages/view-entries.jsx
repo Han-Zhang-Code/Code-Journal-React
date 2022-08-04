@@ -11,7 +11,7 @@ export default class ViewEntries extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/code')
+    fetch('/api/code', { headers: { 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
       .then(res => res.json())
       .then(entries => this.setState({ entries }));
   }
@@ -19,7 +19,7 @@ export default class ViewEntries extends React.Component {
   componentDidUpdate(prevProps) {
     const { sort } = this.props;
     if (this.props.sort !== prevProps.sort) {
-      fetch(`/api/${sort === null ? 'code' : sort}`)
+      fetch(`/api/${sort === null ? 'code' : sort}`, { headers: { 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
         .then(res => res.json())
         .then(entries => this.setState({ entries }));
     }
@@ -45,7 +45,7 @@ export default class ViewEntries extends React.Component {
           <form className='search-field' onSubmit={e => {
             e.preventDefault();
             window.location.hash = 'search';
-            fetch(`/api/search/${this.state.userinput}`)
+            fetch(`/api/search/${this.state.userinput}`, { headers: { 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
               .then(res => res.json())
               .then(entries => this.setState({ entries }));
 
