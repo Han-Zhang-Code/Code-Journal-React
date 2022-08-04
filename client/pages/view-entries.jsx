@@ -32,6 +32,7 @@ export default class ViewEntries extends React.Component {
       <><div className='view-entries-container'>
 
         <div className='entries-title-bar'>
+          <div className='features'>
           <div className='app-title'> <a href="#entries" className='title-link'>Code Journal</a></div>
           <a href="#entries" className='view-entries-button'>Entries</a>
           <div className="dropdown">
@@ -53,6 +54,15 @@ export default class ViewEntries extends React.Component {
             <input required type="text" className="search-area" value={this.state.userinput} onChange={e => { this.setState({ userinput: e.target.value }); }}/>
             <button className='search-button' type='submit'>Search</button>
           </form>
+          </div>
+          <div className='sign-out-div'>
+            {window.localStorage.getItem('react-context-jwt') === null &&
+            <a href="#sign-in" className='signout-button'>Sign In</a>
+            }
+            {window.localStorage.getItem('react-context-jwt') !== null &&
+              <a href="#sign-in" className='signout-button' onClick={() => { window.localStorage.removeItem('react-context-jwt'); }}>Sign Out</a>
+            }
+          </div>
         </div>
         <div className='container'>
           <div className='view-entries-title'>

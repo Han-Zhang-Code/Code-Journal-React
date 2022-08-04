@@ -45,6 +45,30 @@
   justify-content: space-between;
 }
 
+.signout-div {
+  text-align: center;
+  align-items: center;
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.sign-out-div {
+  margin-right: 3%;
+}
+
+.signout-button {
+  color: white;
+  text-decoration: none;
+  font-family:
+    "Proza Libre",
+    sans-serif;
+  font-size: 13px;
+}
+
 .auth-button {
   background-color: #552b81;
   color: white;
@@ -217,6 +241,7 @@
   color: white;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
   font-family:
     "Proza Libre",
@@ -545,6 +570,14 @@ button:hover {
   .pane {
     height: 100%;
     display: flex;
+  }
+
+  .auth-link {
+    font-size: 10px;
+  }
+
+  .auth-button {
+    font-size: 10px;
   }
 
   .delete-button {
