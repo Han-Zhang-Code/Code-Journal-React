@@ -51,7 +51,7 @@ export default function CodeEditor(props) {
     event.preventDefault();
     fetch(`/api/code/${entryId}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
       .then(() => {
-        window.location.hash = '#';
+        window.location.hash = '#entries';
       });
   }
   function handleSubmit(event) {
@@ -60,13 +60,13 @@ export default function CodeEditor(props) {
     if (dataView === 'createEntry') {
       fetch('/api/code', { method: 'POST', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
         .then(() => {
-          window.location.hash = '#';
+          window.location.hash = '#entries';
         });
     }
     if (dataView === 'edit-entry') {
       fetch(`/api/code/${entryId}`, { method: 'PATCH', body: JSON.stringify(newObject), headers: { 'Content-Type': 'application/json' } })
         .then(() => {
-          window.location.hash = '#';
+          window.location.hash = '#entries';
         });
     }
 

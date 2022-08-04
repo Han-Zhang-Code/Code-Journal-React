@@ -33,7 +33,7 @@ export default class ViewEntries extends React.Component {
 
         <div className='entries-title-bar'>
           <div className='app-title'> <a href="#entries" className='title-link'>Code Journal</a></div>
-          <a href="#" className='view-entries-button'>Entries</a>
+          <a href="#entries" className='view-entries-button'>Entries</a>
           <div className="dropdown">
             <button className="dropbtn">Sort by</button>
             <div className="dropdown-content">
