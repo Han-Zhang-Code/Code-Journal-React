@@ -128,42 +128,49 @@ app.get('/api/code', (req, res, next) => {
 });
 
 app.get('/api/alphabet', (req, res, next) => {
+  const { userId } = req.user;
   const sql = `
-    select * from "code-journal"
+    select * from "code-journal" where "userId"=$1
     order by "title"
   `;
-  db.query(sql).then(result => {
+  const params = [userId];
+  db.query(sql, params).then(result => {
     res.status(200).json(result.rows);
   }).catch(err => next(err));
 });
 
 app.get('/api/createTime', (req, res, next) => {
+  const { userId } = req.user;
   const sql = `
-    select * from "code-journal"
+    select * from "code-journal" where "userId"=$1
     order by "entryId"
   `;
-  db.query(sql).then(result => {
+  const params = [userId];
+  db.query(sql, params).then(result => {
     res.status(200).json(result.rows);
   }).catch(err => next(err));
 });
 
 app.get('/api/size', (req, res, next) => {
+  const { userId } = req.user;
   const sql = `
-    select * from "code-journal"
+    select * from "code-journal" where "userId"=$1
     order by length("javascript")
   `;
-  db.query(sql).then(result => {
+  const params = [userId];
+  db.query(sql, params).then(result => {
     res.status(200).json(result.rows);
   }).catch(err => next(err));
 });
 
 app.get('/api/search/:title', (req, res, next) => {
+  const { userId } = req.user;
   const title = req.params.title;
   const sql = `
     select * from "code-journal"
-    where "title" like '%' || $1 || '%'
+    where "title" like '%' || $1 || '%' and "userId"=$2
   `;
-  const searchItem = [title];
+  const searchItem = [title, userId];
   db.query(sql, searchItem).then(result => {
     if (!result.rows[0]) {
       throw new ClientError(404, `cannot find entry with title ${searchItem}`);
