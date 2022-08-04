@@ -7,8 +7,86 @@
   flex-wrap: wrap;
 }
 
+.username-section {
+  margin-bottom: 20px;
+  font-family:
+    "Proza Libre",
+    sans-serif;
+}
+
+.username-label {
+  margin-right: 20px;
+}
+
 .column-full {
   width: 100%;
+}
+
+.username-input {
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: #f5f3f3;
+}
+
+.password-section {
+  margin-bottom: 20px;
+  font-family:
+    "Proza Libre",
+    sans-serif;
+}
+
+.password-label {
+  margin-right: 24px;
+}
+
+.auth-button-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.signout-div {
+  text-align: center;
+  align-items: center;
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.sign-out-div {
+  margin-right: 3%;
+}
+
+.signout-button {
+  color: white;
+  text-decoration: none;
+  font-family:
+    "Proza Libre",
+    sans-serif;
+  font-size: 13px;
+}
+
+.auth-button {
+  background-color: #552b81;
+  color: white;
+  border: none;
+  font-size: 13px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-family:
+    "Proza Libre",
+    sans-serif;
+  text-decoration: none;
+}
+
+.password-input {
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: #f5f3f3;
 }
 
 .adjust-img {
@@ -163,6 +241,7 @@
   color: white;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
   font-family:
     "Proza Libre",
@@ -185,6 +264,23 @@
   padding-left: 20px;
   text-decoration: none;
   font-size: 13px;
+}
+
+.auth-page {
+  background-color: #e5e5e5;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-form {
+  border: 10px solid #b6b6b6;
+  padding: 50px 100px 30px;
+  margin-bottom: 150px;
+  background-color: white;
+  border-radius: 10px;
 }
 
 .search-button {
@@ -474,6 +570,14 @@ button:hover {
   .pane {
     height: 100%;
     display: flex;
+  }
+
+  .auth-link {
+    font-size: 10px;
+  }
+
+  .auth-button {
+    font-size: 10px;
   }
 
   .delete-button {
