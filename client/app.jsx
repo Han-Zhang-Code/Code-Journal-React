@@ -38,7 +38,10 @@ export default class App extends React.Component {
       return <EditEntry entryId={entryId} />;
     }
     if (route.path === 'sign-up') {
-      return <Auth />;
+      return <Auth dataView='sign-up' />;
+    }
+    if (route.path === 'sign-in') {
+      return <Auth dataView='sign-in' />;
     }
     return <ViewEntries />;
   }
