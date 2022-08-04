@@ -42,7 +42,7 @@
 
 .auth-button-div {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .auth-button {

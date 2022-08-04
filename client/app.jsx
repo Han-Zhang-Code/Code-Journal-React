@@ -22,9 +22,12 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === '' || route.path === 'entries') {
+    if (route.path === 'entries') {
       const sort = route.params.get('sort');
       return <ViewEntries sort={sort}/>;
+    }
+    if (route.path === '') {
+      return <Auth dataView='sign-in' />;
     }
     if (route.path === 'code-editor') {
       return <Home />;
@@ -43,7 +46,7 @@ export default class App extends React.Component {
     if (route.path === 'sign-in') {
       return <Auth dataView='sign-in' />;
     }
-    return <ViewEntries />;
+    return <Auth dataView='sign-in'/>;
   }
 
   render() {

@@ -25,7 +25,7 @@ export default function Auth(props) {
         .then(res => res.json())
         .then(result => {
           if (result.token && result.user) {
-            window.location.hash = '#';
+            window.location.hash = '#entries';
           }
         });
     }
@@ -67,12 +67,18 @@ export default function Auth(props) {
             onChange={e => (setPassword(e.target.value)) }
           />
         </div>
-        <div className='auth-button-div'>
+        <div>
           {dataView === 'sign-up' &&
-          <button className='auth-button'>Sign Up</button>
+          <div className='auth-button-div'>
+            <a href="#sign-in" className='auth-link'>Already have account?</a>
+            <button className='auth-button'>Sign Up</button>
+          </div>
           }
           {dataView === 'sign-in' &&
-            <button className='auth-button'>Sign In</button>
+              <div className='auth-button-div'>
+                <a href="#sign-up" className='auth-link'>Need an Account? </a>
+                <button className='auth-button'>Sign In</button>
+              </div>
           }
         </div>
       </form>
