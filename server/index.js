@@ -85,12 +85,13 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.post('/api/code', (req, res, next) => {
+  const { userId } = req.user;
   const sql = `
-    insert into "code-journal"("html","css","javascript","title","imageUrl","description")
-    values ($1,$2,$3,$4,$5,$6)
+    insert into "code-journal"("html","css","javascript","title","imageUrl","description","userId")
+    values ($1,$2,$3,$4,$5,$6,$7)
     returning *
   `;
-  const codeArray = [req.body.html, req.body.css, req.body.javascript, req.body.title, req.body.imageUrl, req.body.description];
+  const codeArray = [req.body.html, req.body.css, req.body.javascript, req.body.title, req.body.imageUrl, req.body.description, userId];
   db.query(sql, codeArray).then(result => {
     res.status(200).json(result.rows[0]);
   }).catch(err => next(err));
@@ -116,10 +117,12 @@ app.patch('/api/code/:entryId', (req, res, next) => {
 });
 
 app.get('/api/code', (req, res, next) => {
+  const { userId } = req.user;
   const sql = `
-    select * from "code-journal"
+    select * from "code-journal" where "userId"=$1
   `;
-  db.query(sql).then(result => {
+  const params = [userId];
+  db.query(sql, params).then(result => {
     res.status(200).json(result.rows);
   }).catch(err => next(err));
 });
