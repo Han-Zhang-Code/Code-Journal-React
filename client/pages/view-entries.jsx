@@ -106,7 +106,10 @@ function Entries(props) {
       <div className='caption'>
         <div className='view-entries-title-section'>
           <a href={`#code?entryId=${entryId}`} className='entries-anchor'><h2 className='view-entries-content-title'>{title}</h2></a>
+          <div>
           <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
+            <a ><i className="fas fa-share-alt"></i></a>
+            </div>
         </div>
         <p className='view-entries-content'>{description}</p>
       </div>

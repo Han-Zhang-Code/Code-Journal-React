@@ -23,6 +23,7 @@ CREATE TABLE "public"."code-journal" (
 	"description" TEXT NOT NULL,
   "createdAt"      timestamptz(6) not null default now(),
   "userId" INTEGER not null,
+  "shared" TEXT not null,
 	CONSTRAINT "code-journal_pk" PRIMARY KEY ("entryId"),
     foreign key ("userId")
    references "users" ("userId")
