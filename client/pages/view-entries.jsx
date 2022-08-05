@@ -96,8 +96,19 @@ export default class ViewEntries extends React.Component {
 function Entries(props) {
   const { entryId, title, imageUrl, description, userId } = props.entries;
   const [shared, setShared] = useState(props.entries.shared);
-  return (
 
+  function handleShared() {
+    if (shared === false) {
+      fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+      setShared(true);
+    }
+    if (shared === true) {
+      fetch(`/api/noshare/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+      setShared(false);
+    }
+  }
+
+  return (
   <div className='row'>
     <div className='column-half'>
       <img src={imageUrl} alt={imageUrl} className='view-entries-image'/>
@@ -109,16 +120,7 @@ function Entries(props) {
             {window.localStorage.getItem('userId') === userId.toString() &&
           <div>
           <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
-            <a href="#entries" onClick={() => {
-              if (shared === false) {
-                fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-                setShared(true);
-              }
-              if (shared === true) {
-                fetch(`/api/noshare/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-                setShared(false);
-              }
-            }}><i className={shared === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
+          <a href="#entries" onClick={handleShared}><i className={shared === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
             </div>
           }
         </div>
