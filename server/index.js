@@ -87,8 +87,8 @@ app.get('/api/hello', (req, res) => {
 app.post('/api/code', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-    insert into "code-journal"("html","css","javascript","title","imageUrl","description","userId")
-    values ($1,$2,$3,$4,$5,$6,$7)
+    insert into "code-journal"("html","css","javascript","title","imageUrl","description","userId","shared")
+    values ($1,$2,$3,$4,$5,$6,$7,'false')
     returning *
   `;
   const codeArray = [req.body.html, req.body.css, req.body.javascript, req.body.title, req.body.imageUrl, req.body.description, userId];
@@ -116,10 +116,48 @@ app.patch('/api/code/:entryId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.patch('/api/share/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'entryId must be a positive integer');
+  }
+  const sql = `
+  update "code-journal" set "shared"='true' where "entryId"=$1 returning *
+  `;
+  const codeArray = [entryId];
+  db.query(sql, codeArray)
+    .then(result => {
+      if (!result.rows[0]) {
+        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
+      }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.patch('/api/noshare/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'entryId must be a positive integer');
+  }
+  const sql = `
+  update "code-journal" set "shared"='false' where "entryId"=$1 returning *
+  `;
+  const codeArray = [entryId];
+  db.query(sql, codeArray)
+    .then(result => {
+      if (!result.rows[0]) {
+        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
+      }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/code', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-    select * from "code-journal" where "userId"=$1
+    select * from "code-journal" where "userId"=$1 or "shared"='true'
   `;
   const params = [userId];
   db.query(sql, params).then(result => {
@@ -130,7 +168,7 @@ app.get('/api/code', (req, res, next) => {
 app.get('/api/alphabet', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-    select * from "code-journal" where "userId"=$1
+    select * from "code-journal" where "userId"=$1 or "shared"='true'
     order by "title"
   `;
   const params = [userId];
@@ -142,7 +180,7 @@ app.get('/api/alphabet', (req, res, next) => {
 app.get('/api/createTime', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-    select * from "code-journal" where "userId"=$1
+    select * from "code-journal" where "userId"=$1 or "shared"='true'
     order by "entryId"
   `;
   const params = [userId];
@@ -154,7 +192,7 @@ app.get('/api/createTime', (req, res, next) => {
 app.get('/api/size', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-    select * from "code-journal" where "userId"=$1
+    select * from "code-journal" where "userId"=$1 or "shared"='true'
     order by length("javascript")
   `;
   const params = [userId];
@@ -168,7 +206,7 @@ app.get('/api/search/:title', (req, res, next) => {
   const title = req.params.title;
   const sql = `
     select * from "code-journal"
-    where "title" like '%' || $1 || '%' and "userId"=$2
+    where ("userId"=$2 or "shared"='true') and "title" like '%' || $1 || '%'
   `;
   const searchItem = [title, userId];
   db.query(sql, searchItem).then(result => {

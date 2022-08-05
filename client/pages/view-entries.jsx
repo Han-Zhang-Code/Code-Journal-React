@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default class ViewEntries extends React.Component {
 
@@ -60,7 +60,7 @@ export default class ViewEntries extends React.Component {
             <a href="#sign-in" className='signout-button'>Sign In</a>
             }
             {window.localStorage.getItem('react-context-jwt') !== null &&
-              <a href="#sign-in" className='signout-button' onClick={() => { window.localStorage.removeItem('react-context-jwt'); }}>Sign Out</a>
+              <a href="#sign-in" className='signout-button' onClick={() => { window.localStorage.removeItem('react-context-jwt'); window.localStorage.removeItem('userId'); }}>Sign Out</a>
             }
           </div>
         </div>
@@ -94,10 +94,21 @@ export default class ViewEntries extends React.Component {
 
 }
 function Entries(props) {
-  const { entryId, title, imageUrl, description } = props.entries;
+  const { entryId, title, imageUrl, description, userId } = props.entries;
+  const [shared, setShared] = useState(props.entries.shared);
+
+  function handleShared() {
+    if (shared === false) {
+      fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+      setShared(true);
+    }
+    if (shared === true) {
+      fetch(`/api/noshare/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+      setShared(false);
+    }
+  }
 
   return (
-
   <div className='row'>
     <div className='column-half'>
       <img src={imageUrl} alt={imageUrl} className='view-entries-image'/>
@@ -106,7 +117,12 @@ function Entries(props) {
       <div className='caption'>
         <div className='view-entries-title-section'>
           <a href={`#code?entryId=${entryId}`} className='entries-anchor'><h2 className='view-entries-content-title'>{title}</h2></a>
+            {window.localStorage.getItem('userId') === userId.toString() &&
+          <div>
           <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
+          <a href="#entries" onClick={handleShared}><i className={shared === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
+            </div>
+          }
         </div>
         <p className='view-entries-content'>{description}</p>
       </div>

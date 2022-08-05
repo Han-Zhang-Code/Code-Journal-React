@@ -36,6 +36,7 @@ export default function CodeEditor(props) {
     setDescription(props.description);
     setEntryId(props.entryId);
     setDataView(props.dataView);
+
   }, [props.html, props.css, props.js, props.title, props.imageUrl, props.description, props.entryId, props.dataView]);
 
   function handleTitle(event) {
@@ -141,7 +142,7 @@ export default function CodeEditor(props) {
       </div>
         }
         {
-          dataView === 'view-detail' &&
+         dataView === 'view-detail' &&
           <div className='title-bar'>
             <div className='app-title'> <a href="#entries" className='title-link'>Code Journal</a></div>
           </div>

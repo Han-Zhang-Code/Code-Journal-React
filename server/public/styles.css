@@ -22,6 +22,12 @@
   width: 100%;
 }
 
+.share-icon {
+  font-size: 30px;
+  margin-left: 10px;
+  color: #552b81;
+}
+
 .username-input {
   padding: 5px;
   border: 1px solid;
@@ -382,6 +388,12 @@
 .entries-anchor {
   text-decoration: none;
   color: black;
+}
+
+.entries-anchor:hover {
+  transform: scale(1.2);
+  transition: 0.5s;
+  color: #552b81;
 }
 
 .adjust-collapsed {
