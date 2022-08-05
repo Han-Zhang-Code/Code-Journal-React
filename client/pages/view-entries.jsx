@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default class ViewEntries extends React.Component {
 
@@ -95,7 +95,7 @@ export default class ViewEntries extends React.Component {
 }
 function Entries(props) {
   const { entryId, title, imageUrl, description } = props.entries;
-
+  const [shared, setShared] = useState(props.entries.shared);
   return (
 
   <div className='row'>
@@ -108,7 +108,16 @@ function Entries(props) {
           <a href={`#code?entryId=${entryId}`} className='entries-anchor'><h2 className='view-entries-content-title'>{title}</h2></a>
           <div>
           <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
-            <a ><i className="fas fa-share-alt"></i></a>
+            <a href="#entries" onClick={() => {
+              if (shared === 'no') {
+                fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+                setShared('yes');
+              }
+              if (shared === 'yes') {
+                fetch(`/api/noshare/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+                setShared('no');
+              }
+            }}><i className={shared === 'yes' ? 'fas fa-share-square' : 'fas fa-share'}></i></a>
             </div>
         </div>
         <p className='view-entries-content'>{description}</p>

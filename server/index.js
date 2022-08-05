@@ -116,6 +116,44 @@ app.patch('/api/code/:entryId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.patch('/api/share/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'entryId must be a positive integer');
+  }
+  const sql = `
+  update "code-journal" set "shared"='yes' where "entryId"=$1 returning *
+  `;
+  const codeArray = [entryId];
+  db.query(sql, codeArray)
+    .then(result => {
+      if (!result.rows[0]) {
+        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
+      }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.patch('/api/noshare/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'entryId must be a positive integer');
+  }
+  const sql = `
+  update "code-journal" set "shared"='no' where "entryId"=$1 returning *
+  `;
+  const codeArray = [entryId];
+  db.query(sql, codeArray)
+    .then(result => {
+      if (!result.rows[0]) {
+        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
+      }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/code', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
