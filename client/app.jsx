@@ -1,6 +1,5 @@
 import React from 'react';
 import Home from './pages/home';
-import jwtDecode from 'jwt-decode';
 import ViewEntries from './pages/view-entries';
 import parseRoute from './lib/parse-route';
 import EntryDetail from './pages/view-entry-detail';
@@ -19,9 +18,6 @@ export default class App extends React.Component {
     window.addEventListener('hashchange', event => {
       this.setState({ route: parseRoute(window.location.hash) });
     });
-    const token = window.localStorage.getItem('react-context-jwt');
-    const user = token ? jwtDecode(token) : null;
-    this.setState({ user, isAuthorizing: false });
   }
 
   renderPage() {

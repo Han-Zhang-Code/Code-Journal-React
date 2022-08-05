@@ -27,6 +27,7 @@ export default function Auth(props) {
           if (result.token && result.user) {
             window.location.hash = '#entries';
             window.localStorage.setItem('react-context-jwt', result.token);
+            window.localStorage.setItem('userId', result.user.userId);
           }
         });
     }
