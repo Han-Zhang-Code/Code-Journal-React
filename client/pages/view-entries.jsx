@@ -97,6 +97,7 @@ function Entries(props) {
   const { entryId, title, imageUrl, description, userId } = props.entries;
   const [shared, setShared] = useState(props.entries.shared);
   const [sharedEdit, setSharedEdit] = useState(props.entries.sharedEdit);
+  const [commentOpen, setCommentOpen] = useState(false);
 
   function handleShared() {
     fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
@@ -117,13 +118,15 @@ function Entries(props) {
     <div className='column-half'>
       <div className='caption'>
         <div className='view-entries-title-section'>
+          <div>
           <a href={`#code?entryId=${entryId}`} className='entries-anchor'><h2 className='view-entries-content-title'>{title}</h2></a>
+            </div>
+            <div className='row'>
             {window.localStorage.getItem('userId') === userId.toString() &&
           <div>
           <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
           <a href="#entries" onClick={handleShared}><i className={shared === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
           <a href="#entries" onClick={handleSharedEdit}><i className={sharedEdit === true ? 'fas fa-glasses share-icon' : 'fas fa-user-edit share-icon'}></i></a>
-
             </div>
           }
           {(window.localStorage.getItem('userId') !== userId.toString() && sharedEdit === true) &&
@@ -131,8 +134,12 @@ function Entries(props) {
               <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
             </div>
           }
+              <a href="#entries" onClick={() => { setCommentOpen(!commentOpen); }}><i className="fa-solid fa-comment-dots share-icon"></i></a>
+            </div>
         </div>
-        <p className='view-entries-content'>{description}</p>
+        <p className="view-entries-content" >{description}</p>
+          <div className={`comments-section ${commentOpen ? '' : 'hidden'}`}></div>
+
       </div>
     </div>
   </div>
