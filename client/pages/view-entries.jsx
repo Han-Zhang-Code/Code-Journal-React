@@ -96,6 +96,7 @@ export default class ViewEntries extends React.Component {
 function Entries(props) {
   const { entryId, title, imageUrl, description, userId } = props.entries;
   const [shared, setShared] = useState(props.entries.shared);
+  const [sharedEdit, setSharedEdit] = useState(props.entries.sharedEdit);
 
   function handleShared() {
     if (shared === false) {
@@ -105,6 +106,16 @@ function Entries(props) {
     if (shared === true) {
       fetch(`/api/noshare/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
       setShared(false);
+    }
+  }
+  function handleSharedEdit() {
+    if (shared === false) {
+      fetch(`/api/sharedit/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+      setSharedEdit(true);
+    }
+    if (shared === true) {
+      fetch(`/api/nosharedit/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+      setSharedEdit(false);
     }
   }
 
@@ -121,6 +132,13 @@ function Entries(props) {
           <div>
           <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
           <a href="#entries" onClick={handleShared}><i className={shared === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
+          <a href="#entries" onClick={handleSharedEdit}><i className={sharedEdit === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
+
+            </div>
+          }
+          {(window.localStorage.getItem('userId') !== userId.toString() && sharedEdit === true) &&
+            <div>
+              <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
             </div>
           }
         </div>
