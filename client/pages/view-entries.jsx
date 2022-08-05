@@ -110,15 +110,15 @@ function Entries(props) {
           <div>
           <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
             <a href="#entries" onClick={() => {
-              if (shared === 'no') {
+              if (shared === false) {
                 fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-                setShared('yes');
+                setShared(true);
               }
-              if (shared === 'yes') {
+              if (shared === true) {
                 fetch(`/api/noshare/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-                setShared('no');
+                setShared(false);
               }
-            }}><i className={shared === 'yes' ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
+            }}><i className={shared === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
             </div>
           }
         </div>
