@@ -109,11 +109,11 @@ function Entries(props) {
     }
   }
   function handleSharedEdit() {
-    if (shared === false) {
+    if (sharedEdit === false) {
       fetch(`/api/sharedit/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
       setSharedEdit(true);
     }
-    if (shared === true) {
+    if (sharedEdit === true) {
       fetch(`/api/nosharedit/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
       setSharedEdit(false);
     }
@@ -132,7 +132,7 @@ function Entries(props) {
           <div>
           <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
           <a href="#entries" onClick={handleShared}><i className={shared === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
-          <a href="#entries" onClick={handleSharedEdit}><i className={sharedEdit === true ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
+          <a href="#entries" onClick={handleSharedEdit}><i className={sharedEdit === true ? 'fas fa-glasses share-icon' : 'fas fa-user-edit share-icon'}></i></a>
 
             </div>
           }
