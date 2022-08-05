@@ -99,24 +99,14 @@ function Entries(props) {
   const [sharedEdit, setSharedEdit] = useState(props.entries.sharedEdit);
 
   function handleShared() {
-    if (shared === false) {
-      fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-      setShared(true);
-    }
-    if (shared === true) {
-      fetch(`/api/noshare/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-      setShared(false);
-    }
+    fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+    if (shared) setShared(false);
+    if (!shared) setShared(true);
   }
   function handleSharedEdit() {
-    if (sharedEdit === false) {
-      fetch(`/api/sharedit/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-      setSharedEdit(true);
-    }
-    if (sharedEdit === true) {
-      fetch(`/api/nosharedit/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-      setSharedEdit(false);
-    }
+    fetch(`/api/sharedit/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+    if (sharedEdit) setSharedEdit(false);
+    if (!sharedEdit) setSharedEdit(true);
   }
 
   return (

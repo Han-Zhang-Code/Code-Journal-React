@@ -122,29 +122,11 @@ app.patch('/api/share/:entryId', (req, res, next) => {
   if (!entryId) {
     throw new ClientError(400, 'entryId must be a positive integer');
   }
-  const sql = `
-  update "code-journal" set "shared"='true' where "entryId"=$1 and "userId" = $2 returning *
-  `;
-  const codeArray = [entryId, userId];
-  db.query(sql, codeArray)
-    .then(result => {
-      if (!result.rows[0]) {
-        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
-      }
-      res.json(result.rows[0]);
-    })
-    .catch(err => next(err));
-});
 
-app.patch('/api/noshare/:entryId', (req, res, next) => {
-  const { userId } = req.user;
-  const entryId = Number(req.params.entryId);
-  if (!entryId) {
-    throw new ClientError(400, 'entryId must be a positive integer');
-  }
   const sql = `
-  update "code-journal" set "shared"='false' where "entryId"=$1 and "userId" = $2 returning *
+  update "code-journal" set "shared"= not "shared" where "entryId"=$1 and "userId" = $2 returning *
   `;
+
   const codeArray = [entryId, userId];
   db.query(sql, codeArray)
     .then(result => {
@@ -163,26 +145,7 @@ app.patch('/api/sharedit/:entryId', (req, res, next) => {
     throw new ClientError(400, 'entryId must be a positive integer');
   }
   const sql = `
-  update "code-journal" set "sharedEdit"='true' where "entryId"=$1 and "userId" = $2 returning *
-  `;
-  const codeArray = [entryId, userId];
-  db.query(sql, codeArray)
-    .then(result => {
-      if (!result.rows[0]) {
-        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
-      }
-      res.json(result.rows[0]);
-    })
-    .catch(err => next(err));
-});
-app.patch('/api/nosharedit/:entryId', (req, res, next) => {
-  const { userId } = req.user;
-  const entryId = Number(req.params.entryId);
-  if (!entryId) {
-    throw new ClientError(400, 'entryId must be a positive integer');
-  }
-  const sql = `
-  update "code-journal" set "sharedEdit"='false' where "entryId"=$1 and "userId" = $2 returning *
+  update "code-journal" set "sharedEdit"= not "sharedEdit" where "entryId"=$1 and "userId" = $2 returning *
   `;
   const codeArray = [entryId, userId];
   db.query(sql, codeArray)
