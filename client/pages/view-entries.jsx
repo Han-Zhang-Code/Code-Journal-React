@@ -117,7 +117,7 @@ function Entries(props) {
                 fetch(`/api/noshare/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
                 setShared('no');
               }
-            }}><i className={shared === 'yes' ? 'fas fa-share-square' : 'fas fa-share'}></i></a>
+            }}><i className={shared === 'yes' ? 'fas fa-share-square share-icon' : 'fas fa-share share-icon'}></i></a>
             </div>
         </div>
         <p className='view-entries-content'>{description}</p>

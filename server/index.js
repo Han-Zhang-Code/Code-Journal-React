@@ -206,7 +206,7 @@ app.get('/api/search/:title', (req, res, next) => {
   const title = req.params.title;
   const sql = `
     select * from "code-journal"
-    where "userId"=$2 and ("title" like '%' || $1 || '%' and "shared"='yes')
+    where ("userId"=$2 or "shared"='yes') and "title" like '%' || $1 || '%'
   `;
   const searchItem = [title, userId];
   db.query(sql, searchItem).then(result => {
