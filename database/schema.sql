@@ -24,6 +24,7 @@ CREATE TABLE "public"."code-journal" (
   "createdAt"      timestamptz(6) not null default now(),
   "userId" INTEGER not null,
   "shared" BOOLEAN not null,
+  "sharedEdit" BOOLEAN not null,
 	CONSTRAINT "code-journal_pk" PRIMARY KEY ("entryId"),
     foreign key ("userId")
    references "users" ("userId")
