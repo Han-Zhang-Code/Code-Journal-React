@@ -97,6 +97,23 @@ app.post('/api/code', (req, res, next) => {
   }).catch(err => next(err));
 });
 
+app.post('/api/comments/:entryId', (req, res, next) => {
+  const { userId } = req.user;
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'entryId must be a positive integer');
+  }
+  const sql = `
+    insert into "comments"("userId","entryId","comments")
+    values ($1,$2,$3)
+    returning *
+  `;
+  const codeArray = [userId, entryId, req.body.comments];
+  db.query(sql, codeArray).then(result => {
+    res.status(200).json(result.rows[0]);
+  }).catch(err => next(err));
+});
+
 app.patch('/api/code/:entryId', (req, res, next) => {
   const entryId = Number(req.params.entryId);
   if (!entryId) {

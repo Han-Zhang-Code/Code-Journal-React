@@ -98,6 +98,7 @@ function Entries(props) {
   const [shared, setShared] = useState(props.entries.shared);
   const [sharedEdit, setSharedEdit] = useState(props.entries.sharedEdit);
   const [commentOpen, setCommentOpen] = useState(false);
+  const [comments, setComments] = useState('');
 
   function handleShared() {
     fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
@@ -108,6 +109,12 @@ function Entries(props) {
     fetch(`/api/sharedit/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
     if (sharedEdit) setSharedEdit(false);
     if (!sharedEdit) setSharedEdit(true);
+  }
+  function handleCommentSubmit(e) {
+    e.preventDefault();
+    const commentsObject = { comments };
+    fetch(`/api/comments/${entryId}`, { method: 'POST', body: JSON.stringify(commentsObject), headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+    setComments('');
   }
 
   return (
@@ -138,7 +145,12 @@ function Entries(props) {
             </div>
         </div>
         <p className="view-entries-content" >{description}</p>
-          <div className={`comments-section ${commentOpen ? '' : 'hidden'}`}></div>
+          <div className={`comments-section ${commentOpen ? '' : 'hidden'}`}>
+            <form className='comments-field' onSubmit={handleCommentSubmit}>
+              <textarea required name="name" type="text" className="comments" value={comments} onChange={e => { setComments(e.target.value); }}/>
+              <button className='comment-button' type='submit'>POST</button>
+            </form>
+          </div>
 
       </div>
     </div>
