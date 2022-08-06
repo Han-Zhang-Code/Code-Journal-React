@@ -180,6 +180,8 @@ app.get('/api/code', (req, res, next) => {
   const sql = `
     select * from "code-journal" where "userId"=$1 or "shared"='true' or "sharedEdit"='true'
   `;
+
+  // join "users" using ("userId") join "comments" using ("entryId") where "code-journal".
   const params = [userId];
   db.query(sql, params).then(result => {
     res.status(200).json(result.rows);
