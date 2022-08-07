@@ -163,20 +163,19 @@ function Entries(props) {
         </div>
         <p className="view-entries-content" >{description}</p>
           <div className={`comments-section ${commentOpen ? '' : 'hidden'}`}>
-            <div>
+            <div className='user-comments'>
               {
                 data.map((item, index) => {
                   return (
                     <div key = {index}>
-                      <div>username: {item.username}</div>
-                      <div>cpmments: {item.comments}</div>
+                      <p className='comments'><span className='username'> {`${item.username}:`}</span>{item.comments}</p>
                   </div>
                   );
                 })
               }
             </div>
             <form className='comments-field' onSubmit={handleCommentSubmit}>
-              <textarea required name="name" type="text" className="comments" value={postcomments} onChange={e => { setpostComments(e.target.value); }}/>
+              <textarea required name="name" type="text" className="postcomments" value={postcomments} onChange={e => { setpostComments(e.target.value); }}/>
               <button className='comment-button' type='submit'>POST</button>
             </form>
           </div>

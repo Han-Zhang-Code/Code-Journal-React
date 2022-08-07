@@ -36,7 +36,7 @@ CREATE TABLE "public"."comments" (
 	"userId" int NOT NULL,
   "entryId" int NOT NULL,
 	"comments" TEXT,
-  primary key ("comments"),
+  primary key ("commentsId"),
   FOREIGN KEY ("entryId") REFERENCES "code-journal"("entryId"),
   FOREIGN KEY ("userId") REFERENCES "users"("userId")
 ) WITH (
