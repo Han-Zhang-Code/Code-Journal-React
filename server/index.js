@@ -181,7 +181,7 @@ app.get('/api/viewcomments/:entryId', (req, res, next) => {
     throw new ClientError(400, 'entryId must be a positive integer');
   }
   const sql = `
-    select "username", "comments" from "comments" join "users" using ("userId") where "entryId"=$1
+    select "username", "comments" from "comments" join "users" using ("userId") where "entryId"=$1 order by "commentsId"
   `;
 
   const codeArray = [entryId];
