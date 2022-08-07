@@ -110,7 +110,16 @@ app.post('/api/comments/:entryId', (req, res, next) => {
   `;
   const codeArray = [userId, entryId, req.body.postcomments];
   db.query(sql, codeArray).then(result => {
-    res.status(200).json(result.rows[0]);
+    const sql2 = `
+    select "username", "comments" from "comments" join "users" using ("userId") where "entryId"=$1 order by "commentsId" desc
+  `;
+    const params = [entryId];
+    db.query(sql2, params)
+      .then(result => {
+        res.json(result.rows[0]);
+      })
+      .catch(err => next(err));
+
   }).catch(err => next(err));
 });
 

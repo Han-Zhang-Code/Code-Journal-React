@@ -115,8 +115,8 @@ function Entries(props) {
     e.preventDefault();
     const commentsObject = { postcomments };
     fetch(`/api/comments/${entryId}`, { method: 'POST', body: JSON.stringify(commentsObject), headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
-      .then(() => {
-        loadComments();
+      .then(res => res.json()).then(newdata => {
+        setData([...data, newdata]);
       });
     setpostComments('');
   }
