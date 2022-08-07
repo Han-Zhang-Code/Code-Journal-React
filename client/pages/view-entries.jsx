@@ -99,8 +99,7 @@ function Entries(props) {
   const [sharedEdit, setSharedEdit] = useState(props.entries.sharedEdit);
   const [commentOpen, setCommentOpen] = useState(false);
   const [postcomments, setpostComments] = useState('');
-  const [comments, setComments] = useState('');
-  const [username, setUsername] = useState('');
+  const [data, setData] = useState([]);
 
   function handleShared() {
     fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
@@ -115,19 +114,23 @@ function Entries(props) {
   function handleCommentSubmit(e) {
     e.preventDefault();
     const commentsObject = { postcomments };
-    fetch(`/api/comments/${entryId}`, { method: 'POST', body: JSON.stringify(commentsObject), headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
+    fetch(`/api/comments/${entryId}`, { method: 'POST', body: JSON.stringify(commentsObject), headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
+      .then(() => {
+        loadComments();
+      });
     setpostComments('');
   }
-  function handleCommentClick() {
+  function loadComments() {
     fetch(`/api/viewcomments/${entryId}`, { headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
-      .then(res => res.json()).then(data => {
-        if (!data.error) {
-          setComments(data[0].comments);
-          setUsername(data[0].username);
+      .then(res => res.json()).then(datas => {
+        if (!datas.error) {
+          setData(datas);
         }
-        // console.log(comments);
-        // console.log(data);
       });
+  }
+
+  function handleCommentClick() {
+    loadComments();
     setCommentOpen(!commentOpen);
   }
 
@@ -161,8 +164,16 @@ function Entries(props) {
         <p className="view-entries-content" >{description}</p>
           <div className={`comments-section ${commentOpen ? '' : 'hidden'}`}>
             <div>
-              <div>{username}</div>
-              <div>{comments}</div>
+              {
+                data.map((item, index) => {
+                  return (
+                    <div key = {index}>
+                      <div>username: {item.username}</div>
+                      <div>cpmments: {item.comments}</div>
+                  </div>
+                  );
+                })
+              }
             </div>
             <form className='comments-field' onSubmit={handleCommentSubmit}>
               <textarea required name="name" type="text" className="comments" value={postcomments} onChange={e => { setpostComments(e.target.value); }}/>
