@@ -104,11 +104,11 @@ app.post('/api/comments/:entryId', (req, res, next) => {
     throw new ClientError(400, 'entryId must be a positive integer');
   }
   const sql = `
-    insert into "comments"("userId","comments")
-    values ($1,$2)
+    insert into "comments"("userId","entryId","comments")
+    values ($1,$2,$3)
     returning *
   `;
-  const codeArray = [userId, req.body.postcomments];
+  const codeArray = [userId, entryId, req.body.postcomments];
   db.query(sql, codeArray).then(result => {
     res.status(200).json(result.rows[0]);
   }).catch(err => next(err));
@@ -181,7 +181,7 @@ app.get('/api/viewcomments/:entryId', (req, res, next) => {
     throw new ClientError(400, 'entryId must be a positive integer');
   }
   const sql = `
-    select "username", "comments" from "code-journal"join "users" using ("userId") join "comments" using ("userId") where "code-journal"."entryId"=$1
+    select "username", "comments" from "code-journal"join "users" using ("userId") join "comments" using ("entryId") where "code-journal"."entryId"=$1
   `;
 
   const codeArray = [entryId];
@@ -286,16 +286,23 @@ app.delete('/api/code/:entryId', (req, res, next) => {
   if (!entryId) {
     throw new ClientError(400, 'entryId must be a positive integer');
   }
-  const sql = `
-    delete from "code-journal"
-     where "entryId" = $1
-  `;
-  const params = [entryId];
-  db.query(sql, params)
+  const deleteCommentSql = 'delete from "comments" where "entryId" = $1;';
+  db.query(deleteCommentSql, [entryId])
     .then(result => {
-      res.json(result.rows[0]);
+      const sql = `
+    delete from "code-journal"
+     where "entryId" = $1;
+  `;
+      const params = [entryId];
+      db.query(sql, params)
+        .then(result => {
+          res.json(result.rows[0]);
+        })
+        .catch(err => next(err));
+
     })
     .catch(err => next(err));
+
 });
 
 app.use(errorMiddleware);

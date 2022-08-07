@@ -33,7 +33,9 @@ CREATE TABLE "public"."code-journal" (
 );
 CREATE TABLE "public"."comments" (
 	"userId" int NOT NULL,
+  "entryId" int NOT NULL,
 	"comments" TEXT,
+  FOREIGN KEY ("entryId") REFERENCES "code-journal"("entryId"),
   FOREIGN KEY ("userId") REFERENCES "users"("userId")
 ) WITH (
   OIDS=FALSE
