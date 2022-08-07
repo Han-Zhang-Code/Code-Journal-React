@@ -121,8 +121,10 @@ function Entries(props) {
   function handleCommentClick() {
     fetch(`/api/viewcomments/${entryId}`, { headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
       .then(res => res.json()).then(data => {
-        setComments(data[0].comments);
-        setUsername(data[0].username);
+        if (!data.error) {
+          setComments(data[0].comments);
+          setUsername(data[0].username);
+        }
         // console.log(comments);
         // console.log(data);
       });
