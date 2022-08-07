@@ -104,11 +104,11 @@ app.post('/api/comments/:entryId', (req, res, next) => {
     throw new ClientError(400, 'entryId must be a positive integer');
   }
   const sql = `
-    insert into "comments"("userId","entryId","comments")
-    values ($1,$2,$3)
+    insert into "comments"("userId","comments")
+    values ($1,$2)
     returning *
   `;
-  const codeArray = [userId, entryId, req.body.comments];
+  const codeArray = [userId, req.body.postcomments];
   db.query(sql, codeArray).then(result => {
     res.status(200).json(result.rows[0]);
   }).catch(err => next(err));
@@ -171,6 +171,26 @@ app.patch('/api/sharedit/:entryId', (req, res, next) => {
         throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
       }
       res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/viewcomments/:entryId', (req, res, next) => {
+  const entryId = Number(req.params.entryId);
+  if (!entryId) {
+    throw new ClientError(400, 'entryId must be a positive integer');
+  }
+  const sql = `
+    select "username", "comments" from "code-journal"join "users" using ("userId") join "comments" using ("userId") where "code-journal"."entryId"=$1
+  `;
+
+  const codeArray = [entryId];
+  db.query(sql, codeArray)
+    .then(result => {
+      if (result.rows.length === 0) {
+        throw new ClientError(404, `cannot find entry with entryId ${entryId}`);
+      }
+      res.json(result.rows);
     })
     .catch(err => next(err));
 });
@@ -249,6 +269,7 @@ app.get('/api/code/:entryId', (req, res, next) => {
     select * from "code-journal"
      where "entryId" = $1
   `;
+
   const params = [entryId];
   db.query(sql, params)
     .then(result => {

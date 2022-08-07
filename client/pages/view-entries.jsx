@@ -94,11 +94,13 @@ export default class ViewEntries extends React.Component {
 
 }
 function Entries(props) {
-  const { entryId, title, imageUrl, description, userId, username, comments } = props.entries;
+  const { entryId, title, imageUrl, description, userId } = props.entries;
   const [shared, setShared] = useState(props.entries.shared);
   const [sharedEdit, setSharedEdit] = useState(props.entries.sharedEdit);
   const [commentOpen, setCommentOpen] = useState(false);
-  const [postcomments, setComments] = useState('');
+  const [postcomments, setpostComments] = useState('');
+  const [comments, setComments] = useState('');
+  const [username, setUsername] = useState('');
 
   function handleShared() {
     fetch(`/api/share/${entryId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
@@ -114,7 +116,17 @@ function Entries(props) {
     e.preventDefault();
     const commentsObject = { postcomments };
     fetch(`/api/comments/${entryId}`, { method: 'POST', body: JSON.stringify(commentsObject), headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } });
-    setComments('');
+    setpostComments('');
+  }
+  function handleCommentClick() {
+    fetch(`/api/viewcomments/${entryId}`, { headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
+      .then(res => res.json()).then(data => {
+        setComments(data[0].comments);
+        setUsername(data[0].username);
+        // console.log(comments);
+        // console.log(data);
+      });
+    setCommentOpen(!commentOpen);
   }
 
   return (
@@ -141,7 +153,7 @@ function Entries(props) {
               <a href={`#edit-code?entryId=${entryId}`} className='entries-anchor'><i className="fas fa-edit adjust-editing-button"></i></a>
             </div>
           }
-              <a href="#entries" onClick={() => { setCommentOpen(!commentOpen); }}><i className="fa-solid fa-comment-dots share-icon"></i></a>
+              <a href="#entries" onClick={handleCommentClick}><i className="fa-solid fa-comment-dots share-icon"></i></a>
             </div>
         </div>
         <p className="view-entries-content" >{description}</p>
@@ -151,11 +163,10 @@ function Entries(props) {
               <div>{comments}</div>
             </div>
             <form className='comments-field' onSubmit={handleCommentSubmit}>
-              <textarea required name="name" type="text" className="comments" value={postcomments} onChange={e => { setComments(e.target.value); }}/>
+              <textarea required name="name" type="text" className="comments" value={postcomments} onChange={e => { setpostComments(e.target.value); }}/>
               <button className='comment-button' type='submit'>POST</button>
             </form>
           </div>
-
       </div>
     </div>
   </div>
