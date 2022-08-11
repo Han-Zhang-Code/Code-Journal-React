@@ -654,6 +654,10 @@ i:hover {
     sans-serif;
 }
 
+.auth-link {
+  color: #552b81;
+}
+
 .title-link {
   color: white;
   text-decoration: none;
