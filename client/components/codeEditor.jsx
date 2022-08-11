@@ -92,7 +92,7 @@ export default function CodeEditor(props) {
             <h3 className="adjust-save-title">New Entry</h3>
             <div className="row">
               <div className="column-half">
-                  <img src={imageUrl === '' ? 'image/placeholder-image-square.jpeg' : imageUrl} alt="placeholder-image-square" className="adjust-img column-full"/>
+                  <img src={imageUrl === '' ? '/image/placeholder-image-square.jpeg' : imageUrl} alt="placeholder-image-square" className="adjust-img column-full"/>
               </div>
               <div className="column-half">
                 <div>
