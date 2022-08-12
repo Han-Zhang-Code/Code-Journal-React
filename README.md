@@ -67,25 +67,13 @@ This project is a milestone for me to demonstrate what I have learnt so far in t
   ```
       cp .env.example .env
   ``` 
+  
 ### Database Setup
-  1. make sure that `postgresql` is running
-  Start the `postgresql`:
-    
-```
-    sudo service postgresql start
-```
-
-    Check the `postgresql`:
+  1. make sure that `postgresql` is running, to start/stop the `postgresql` server replace the `status` to `start`/`stop`
     
 ```
     sudo service postgresql status
 ```
-
-    Stop the `postgresql`:
-    
-```
-    sudo service postgresql stop
-``` 
 
   2. Create a new database named `codejournal`
 ```
@@ -95,3 +83,16 @@ This project is a milestone for me to demonstrate what I have learnt so far in t
 ```
     npm run db:import
 ```
+  4. Examine `codejournal` database with the `pgweb` GUI tool for PostgreSQL. *Reminder:* `pgweb` can be seen at `http://localhost:8081` once it's running.
+ ```
+ ```pgweb --db=codejournal
+ ```
+ 
+ 
+### Complete the Setup 
+
+  1. Start the Express API and Webpack Dev Server together with the provided `"dev"` script.
+```
+    npm run dev
+```
+  2. Open the application in your browser at `http://localhost:3000`
