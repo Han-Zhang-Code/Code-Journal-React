@@ -65,5 +65,27 @@ This project is a milestone for me to demonstrate what I have learnt so far in t
   1. Read through the `dependencies` listed in `package.json` and install everything with `npm install`.
   2. Make a copy of the provided `.env.example` file. Name your copy `.env.`
   ```
-  cp .env.example .env
+      cp .env.example .env
   ``` 
+### Database Setup
+  1. make sure that `postgresql` is running
+  Start the `postgresql`:
+```
+    sudo service postgresql start
+```
+  Check the `postgresql`:
+```
+    sudo service postgresql status
+```
+  Stop the `postgresql`:
+```
+    sudo service postgresql stop
+```
+  2. Create a new database named `codejournal`
+```
+    createdb codejournal
+```
+  3. Read the code in the provided `database/schema.sql` and `database/data.sql`, as well as the commands in the provided `databse/db-import.bash` file. Then import the database schema and test data using the provided `"db:import"` script in `package.json`.
+```
+    npm run db:import
+```
