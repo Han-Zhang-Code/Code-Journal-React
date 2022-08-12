@@ -118,9 +118,14 @@
   margin-right: 24px;
 }
 
+.auth-invalid-link {
+  text-decoration: none;
+}
+
 .auth-button-div {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .signout-div {
@@ -652,6 +657,10 @@ i:hover {
   font-family:
     "Proza Libre",
     sans-serif;
+}
+
+.auth-link {
+  color: #552b81;
 }
 
 .title-link {

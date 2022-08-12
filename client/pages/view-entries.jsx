@@ -123,6 +123,7 @@ function Entries(props) {
   function loadComments() {
     fetch(`/api/viewcomments/${entryId}`, { headers: { 'Content-Type': 'application/json', 'x-access-token': window.localStorage.getItem('react-context-jwt') } })
       .then(res => res.json()).then(datas => {
+
         if (!datas.error) {
           setData(datas);
         }
