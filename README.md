@@ -70,14 +70,19 @@ This project is a milestone for me to demonstrate what I have learnt so far in t
 ### Database Setup
   1. make sure that `postgresql` is running
     Start the `postgresql`:
+    
 ```
     sudo service postgresql start
 ```
+
     Check the `postgresql`:
+    
 ```
     sudo service postgresql status
 ```
+
     Stop the `postgresql`:
+    
 ```
     sudo service postgresql stop
 ```
