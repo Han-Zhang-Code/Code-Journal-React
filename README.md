@@ -57,3 +57,11 @@ This project is a milestone for me to demonstrate what I have learnt so far in t
 
 ## Stretch Features:
   1. User can change the app theme by one click
+
+
+## Instruction:
+
+### Gettting Started
+  1. Read through the `dependencies` listed in `package.json` and install everything with `npm install`.
+  2. Make a copy of the provided `.env.example` file. Name your copy `.env.`
+  ```cp .env.example .env``` 
