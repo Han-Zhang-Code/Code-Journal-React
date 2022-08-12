@@ -85,7 +85,7 @@ This project is a milestone for me to demonstrate what I have learnt so far in t
 ```
   4. Examine `codejournal` database with the `pgweb` GUI tool for PostgreSQL. *Reminder:* `pgweb` can be seen at `http://localhost:8081` once it's running.
  ```
- ```pgweb --db=codejournal
+ pgweb --db=codejournal
  ```
  
  
