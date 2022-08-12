@@ -49,9 +49,9 @@ This project is a milestone for me to demonstrate what I have learnt so far in t
   
 ## Demo
 
-![Aug-12-2022 11-03-45](https://user-images.githubusercontent.com/103379415/184417728-e743ef50-6838-45f4-aa60-ec8e81c9b013.gif)
-
 ![Aug-12-2022 10-51-44](https://user-images.githubusercontent.com/103379415/184417662-31a4b5f0-6c8b-4459-9399-269ea2c98208.gif)
+
+![Aug-12-2022 11-03-45](https://user-images.githubusercontent.com/103379415/184417728-e743ef50-6838-45f4-aa60-ec8e81c9b013.gif)
 
 
 
